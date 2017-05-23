@@ -112,6 +112,9 @@ ID                  NAME                      IMAGE                             
 5wt37fio1tkx         \_ windows_tweet_app.1   mikegcoleman/windows_tweet_app:latest   lin-pdx-01          Shutdown            Rejected 26 seconds ago   "No such image: mikegcoleman/w…"
 vp43xjba3e2b         \_ windows_tweet_app.1   mikegcoleman/windows_tweet_app:latest   lin-pdx-01          Shutdown            Rejected 27 seconds ago   "No such image: mikegcoleman/w…"
 ```
+docker node ls
+docker node inspect <node id for win-xxx-01>
+
 ```
 docker service create \
    --name windows_tweet_app \
