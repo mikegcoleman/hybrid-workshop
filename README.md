@@ -1,5 +1,7 @@
 # hybrid-workshop
 
+## Build Our Hybrid Swarm
+
 SSH into your Linux node (it should be <location>-lin-#). Your DNS name, username and password will be on the paper you received earlier.
 
 ```
@@ -27,7 +29,7 @@ It should end up looking something like this:
 ```
 docker swarm join --token SWMTKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff 10.0.2.32:2377
 ```
-Use your RDP client to connect into your Windows node (the address should be similar to `win-<location>-#.westus2.cloudapp.azure.com` your username and password are on the paper you received earlier)
+Use your RDP client to connect into your Windows node (the address should be similar to `<location>-win-#.westus2.cloudapp.azure.com` your username and password are on the paper you received earlier)
 
 Once connected to your Windows Server 2016 VM open a Powershell window by clicking the `Start` button (which looks like a flag in the lower left corner) and then click the Windows Power Shell icon (Do NOT choose Windows Powershell ISE) near the top right.
 
@@ -77,7 +79,9 @@ Scroll up in your terminal until you find the `Description` section. It should l
 
 What we want to notice here is the hierarchy. We inspected the node, and the `OS` is listed under `Platform` so the full path for the `OS` label is `node.platform.OS`. This information will be used in a later part of the lab.
 
-No that we've build our cluster, let's deploy a couple of web apps.
+## Deploy Linux and Windows web applications
+
+Now that we've build our cluster, let's deploy a couple of web apps.
 
 We're going to clone the workshop repo onto each machine, and then build a simple webapp for each operating system.
 
