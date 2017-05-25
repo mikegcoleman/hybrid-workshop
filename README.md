@@ -392,3 +392,7 @@ wgaf4vxptafj        atsea_database.1    sixeyed/atsea-db:mssql    win-pdx-21    
 You can see from the output above the two services were deployed to the two different hosts, and are now up and Running
 
 > **Note**: It can take a few minutes for all services to start. Just keep running the `docker stack ps` command until you see both services with a `DESIRED STATE` of `Running`
+
+To see our running web site (an art store) visit `http://<your linux dns name>`.
+
+This concludes our workshop, thanks for attending. 
