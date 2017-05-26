@@ -245,12 +245,12 @@ $ docker service create \
    -p 8080:80 \
    --name linux_tweet_app \
    --constraint 'node.platform.os == linux' \
-   mikegcoleman/linux_tweet_app
+   <your docker id>/linux_tweet_app
 sbkz4dl6slrd6xl7e6rp1qlt2
 ```
 Let's look at each part of that command:
 
-- `docker service create`: Creates a new service based on the supplied image (<your docker id>/linux_tweet_app)
+- `docker service create`: Creates a new service based on the supplied image (`<your docker id>/linux_tweet_app`)
 
 - `--detach=true`: Runs our service in the background
 
@@ -271,6 +271,9 @@ $ docker service ls
 ID                  NAME                MODE                REPLICAS            IMAGE                                 PORTS
 sbkz4dl6slrd        linux_tweet_app     replicated          1/1                 mikegcoleman/linux_tweet_app:latest   *:8080->80/tcp
 ```
+
+> **Note**: When the service is fully deployed it should read `1/1` under `REPLICAS`
+
 And we can check the tasks in our service by running `docker service ps`.
 
 ```
