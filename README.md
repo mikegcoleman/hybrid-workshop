@@ -18,6 +18,10 @@ In this lab we'll build a hybrid cluster, and then deploy both a Linux and Windo
 >   * [Task 2.1: Clone the Demo Repo](#task2.1)
 >   * [Task 2.2: Build and Push Your Image to Docker Hub](#task2.2)
 >   * [Task 2.3: Deploy the Web App](#task2.3)
+> * [Task 3: Deploy a Windows Web App Service](#task2)
+>   * [Task 2.1: Clone the Demo Repo](#task2.1)
+>   * [Task 2.2: Build and Push Your Image to Docker Hub](#task2.2)
+>   * [Task 2.3: Deploy the Web App](#task2.3)
 
 ## Document conventions
 
@@ -136,7 +140,7 @@ Scroll up in your terminal until you find the `Description` section. It should l
 
 What we want to notice here is the hierarchy. We inspected the node, and the `OS` is listed under `Platform` so the full path for the `OS` label is `node.platform.OS`. This information will be used in a later part of the lab.
 
-## <a name="task2"></a>Task 2: Deploy a Linux-based Web App Service
+## <a name="task2"></a>Task 2: Deploy a Linux Web App
 
 Now that we've build our cluster, let's deploy a couple of web apps. These are simple web pages that allow you to send a tweet. One is built on Linux using NGINX and the other is build on Windows Server 2016 using IIS.  
 
