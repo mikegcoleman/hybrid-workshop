@@ -1,11 +1,63 @@
-# hybrid-workshop
+# Deploying Multi-OS applications to Docker Swarm
+With the release of Docker overlay networking for Windows Server 2016, it's not possible to create swarm clusters that include Windows Servers. This could be an all Windows cluster, or a hybrid cluster of Linux and Windows machines. 
 
-## Build Our Hybrid Swarm
+In this lab we'll build a hybrid cluster, and then deploy both a Linux and Windows web app, as well as an application that includes both Windows and Linux components. 	
 
-SSH into your Linux node (it should be <location>-lin-#). Your DNS name, username and password will be on the paper you received earlier.
+> **Difficulty**: Beginner 
+
+> **Time**: Approximately 30 minutes
+
+> **Tasks**:
+>
+> * [Prerequisites](#prerequisites)
+> * [Task 1: Build a Hybrid Swarm](#task1)
+>   * [Task 1.1: Create the Swarm Manager](#task1.1)
+>   * [Task 1.2: Add a Worker Node](#task1.2)
+>   * [Task 1.3: Examine the Cluster](#task1.3)
+> * [Task 2: Deploy a Linux Web App Service](#task2)
+>   * [Task 2.1: Clone the Demo Repo](#task2.1)
+>   * [Task 2.2: Build and Push Your Image to Docker Hub](#task2.2)
+>   * [Task 2.3: Deploy the Web App](#task2.3)
+
+## Document conventions
+
+When you encounter a phrase in between `<` and `>`  you are meant to substitute in a different value. 
+
+For instance if you see `$ip = <ip-address>` you would actually type something like `$ip = '10.0.0.4'`
+
+## <a name="prerequisites"></a>Prerequisites
+
+You will be provided a set of  virtual machines (one Windows and one Linux) running in Azure, which are already configured with Docker and some base images. You do not need Docker running on your laptop, but you will need a Remote Desktop client to connect to the Windows VM, and an SSH client to connect into the Linux one. 
+
+### RDP Client
+- Windows - use the built-in Remote Desktop Connection app.
+- Mac - install [Microsoft Remote Desktop](https://itunes.apple.com/us/app/microsoft-remote-desktop/id715768417?mt=12) from the app store.
+- Linux - install [Remmina](http://www.remmina.org/wp/), or any RDP client you prefer.
+
+### SSH Client
+- Windows - [Download Putty] (http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)
+- Linux - Use the built in SSH client
+- Mac - Use the built in SSH client
+
+> **Note**: When you connect to the Windows VM, if you are prompted to run Windows Update, you should cancel out. The labs have been tested with the existing VM state and any changes may cause problems.
+
+### Docker ID
+You will build images and push them to Docker Hub, so you can pull them on different Docker hosts. You will need a Docker ID.
+
+- Sign up for a free Docker ID on [Docker Hub](https://hub.docker.com)
+
+## <a name="task1"></a>Task 1: Build a Hybrid Swarm
+
+Our first step will be to create a two node swarm cluster. We'll make the Linux node the manager node, and our Windows node will be the worker node. 
+
+> **Note**: Window Server 2016 machiens can also be manager nodes.
+
+### <a name="task1.1"></a>Task 1.1: Create the Swarm Manager
+
+Either in a terminal window (Mac or Linux) or using Putty (Windows) SSH into your Linux node. The DNS name, username and password should have been provided to you.
 
 ```
-ssh docker@<location-lin-#>.westus2.cloudapp.azure.com)
+ssh docker@<linux node DNS name>.westus2.cloudapp.azure.com)
 ```
 Create your swarm by issuing the `docker swarm init` command. This command will create a swarm cluster, and add the current node as a manager.
 
@@ -22,14 +74,17 @@ To add a worker to this swarm, run the following command:
 To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 ```
 
-Copy the join command and paste it into a text editor, then remove the '\' and make the command a single line (this is because Windows does not know how to handle the linux-style `\`)
+Copy the join command and paste it into a text editor, then remove the `\` and make the command a single line.
 
 It should end up looking something like this:
 
 ```
 docker swarm join --token SWMTKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff 10.0.2.32:2377
 ```
-Use your RDP client to connect into your Windows node (the address should be similar to `<location>-win-#.westus2.cloudapp.azure.com` your username and password are on the paper you received earlier)
+
+### <a name="task1.2"></a>Task 1.2: Add a Worker Node
+
+Use your RDP client to connect into your Windows node. The DNS name, username, and password should have been provided to you. 
 
 Once connected to your Windows Server 2016 VM open a Powershell window by clicking the `Start` button (which looks like a flag in the lower left corner) and then click the Windows Power Shell icon (Do NOT choose Windows Powershell ISE) near the top right.
 
@@ -39,7 +94,9 @@ In the Powershell window paste in your Docker swarm join command. This command w
 docker swarm join --token SWMTKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff 10.0.2.32:2377
 This node joined a swarm as a worker.
 ```
-> **Note**: Sometimes joining the swarm will cause your RDP connection to reset, simply reconnect
+> **Note**: Sometimes joining the swarm will cause your RDP connection to reset, if this happens simply reconnect
+
+### <a name="task1.3"></a>Task 1.3: Examine the Cluster
 
 Switch back to your Linux VM.
 
@@ -79,7 +136,7 @@ Scroll up in your terminal until you find the `Description` section. It should l
 
 What we want to notice here is the hierarchy. We inspected the node, and the `OS` is listed under `Platform` so the full path for the `OS` label is `node.platform.OS`. This information will be used in a later part of the lab.
 
-## Deploy Linux and Windows web applications
+## <a name="task2"></a>Task 2: Deploy a Linux-based Web App Service
 
 Now that we've build our cluster, let's deploy a couple of web apps. These are simple web pages that allow you to send a tweet. One is built on Linux using NGINX and the other is build on Windows Server 2016 using IIS.  
 
@@ -87,9 +144,9 @@ We're going to clone the workshop repo onto each machine, and then build a the w
 
 Let's start on the Linux node.
 
-# Deploy the Linux version of our Tweet web application
+### <a name="task2.1"></a> Task 2.1: Clone the Demo Repo
 
-Make sure you're in your home directory
+Make sure you're in your home directory on your Linux VM
 
 `$ cd ~`
 
@@ -104,9 +161,16 @@ remote: Total 13 (delta 1), reused 10 (delta 1), pack-reused 0
 Unpacking objects: 100% (13/13), done.
 Checking connectivity... done.
 ```
-Now change into the `linux_tweet_app` directory.
+
+You now have the necessary demo code on your Linux VM. 
+
+### <a name="task2.2"></a> Task 2.2: Build and Push the Linux Web App Image
+
+Change into the `linux_tweet_app` directory.
 
 `$ cd ~/hybrid-workshop/linux_tweet_app/`
+
+#### Build the Docker image
 
 Next use `docker build` to build your Linux tweet web app Docker image.
 
@@ -139,7 +203,9 @@ Removing intermediate container 54020cdec942
 Successfully built ed5f550fc339
 Successfully tagged <your docker id>/linux_tweet_app:latest
 ```
-Next we'll log into Docker hub and push our image up there for future use.
+Next You'll log into Docker hub and push our image up there for future use.
+
+#### Push the image to Docker Hub
 
 ```
 $ docker login
@@ -158,7 +224,16 @@ f12c15fc56f1: Mounted from library/nginx
 8781ec54ba04: Mounted from library/nginx
 latest: digest: sha256:c89bbabda050e5eba0f8ee3bf40a0c672da08107e612e58062b97988ea463277 size: 1155
 ```
-Now let's run our application by by creating a new service.
+
+### <a name="task2.3"></a> Task 2.3: Deploy the Web App
+
+Now let's run our application by by creating a new service. 
+
+Services are application building blocks (although in many cases an application will only have one service, such as this example). Services are based on a single Docker image. Tasks are the individual Docker containers that execute the application. When you create a new service you instantiate at least one task automatically, but you can scale the number of tasks up to meet the needs of your service. 
+
+#### Create a new service
+
+To create a new service you issue the `docker service create` command. 
 
 ```
 $ docker service create \
@@ -175,14 +250,15 @@ Let's look at each part of that command:
 
 - `--detach=true`: Runs our service in the background
 
-- `-p 8080:80`: Instructs Docker to route any requests coming in on port 8080 to our
-service running on port 80.
+- `-p 8080:80`: Instructs Docker to route any requests coming in to our host VM on port 8080 to our service running on port 80.
 
 - `--name linux_tweet_app`: Applies a name to our service (if this is omitted Docker will choose one at random)
 
-- `--constraint 'node.platform.os == linux'`: This tell swarm to only start this serve on a Linux-based host
+- `--constraint 'node.platform.os == linux'`: This tell swarm to only start this service on a Linux-based host
 
-> **Note**: This is the label we looked at earlier when we did the `docker node inspect` command
+	> **Note**: This is the label we looked at earlier when we did the `docker node inspect` command
+
+#### Verify our service and tasks started
 
 We can use the `docker service ls` command to verify our service was created.
 
@@ -191,13 +267,14 @@ $ docker service ls
 ID                  NAME                MODE                REPLICAS            IMAGE                                 PORTS
 sbkz4dl6slrd        linux_tweet_app     replicated          1/1                 mikegcoleman/linux_tweet_app:latest   *:8080->80/tcp
 ```
-And we can check the tasks in our service by running 'docker service ps'.
+And we can check the tasks in our service by running `docker service ps`.
 
 ```
 $ docker service ps linux_tweet_app
 ID                  NAME                IMAGE                                 NODE                DESIRED STATE       CURRENT STATE                ERROR               PORTS
 z8fbzmkd92kv        linux_tweet_app.1   mikegcoleman/linux_tweet_app:latest   lin-pdx-02          Running             Running about a minute ago
 ```
+#### Check the running web app
 Finally, in your web browser navigate to `http://<your linux node dns name>:8080`
 
 You should see your tweet application running. Feel free to send a tweet, since it's running in container your credentials are not saved.
