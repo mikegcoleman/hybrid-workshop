@@ -3,9 +3,9 @@ With the release of Docker overlay networking for Windows Server 2016, it's not 
 
 In this lab we'll build a hybrid cluster, and then deploy both a Linux and Windows web app, as well as an application that includes both Windows and Linux components. 	
 
-> **Difficulty**: Beginner 
+> **Difficulty**: Intermediate (assumes basic familiarity with Docker) 
 
-> **Time**: Approximately 30 minutes
+> **Time**: Approximately 60 minutes
 
 > **Tasks**:
 >
@@ -19,9 +19,13 @@ In this lab we'll build a hybrid cluster, and then deploy both a Linux and Windo
 >   * [Task 2.2: Build and Push Your Image to Docker Hub](#task2.2)
 >   * [Task 2.3: Deploy the Web App](#task2.3)
 > * [Task 3: Deploy a Windows Web App Service](#task2)
->   * [Task 2.1: Clone the Demo Repo](#task2.1)
->   * [Task 2.2: Build and Push Your Image to Docker Hub](#task2.2)
->   * [Task 2.3: Deploy the Web App](#task2.3)
+>   * [Task 3.1: Clone the Demo Repo](#task2.1)
+>   * [Task 3.2: Build and Push Your Image to Docker Hub](#task2.2)
+>   * [Task 3.3: Deploy the Web App](#task2.3)
+> * [Task 4: Deploy a Multi-OS Application](#task4)
+>   * [Task 4.1: Examine the Docker Compose File](#task4.1)
+>   * [Task 4.2: Deploy the Application](#task4.2)
+>   * [Task 4.3: Verify the Running Application](#task4.3)
 
 ## Document conventions
 
@@ -61,8 +65,9 @@ Our first step will be to create a two node swarm cluster. We'll make the Linux 
 Either in a terminal window (Mac or Linux) or using Putty (Windows) SSH into your Linux node. The DNS name, username and password should have been provided to you.
 
 ```
-ssh docker@<linux node DNS name>.westus2.cloudapp.azure.com)
+ssh docker@<linux node DNS name>.westus2.cloudapp.azure.com
 ```
+
 Create your swarm by issuing the `docker swarm init` command. This command will create a swarm cluster, and add the current node as a manager.
 
 ```
@@ -286,8 +291,11 @@ Finally, in your web browser navigate to `http://<your linux node dns name>:8080
 
 You should see your tweet application running. Feel free to send a tweet, since it's running in container your credentials are not saved.
 
-# Deploy the Windows version of our Twitter web application
+## <a name="task3"></a>Task 3: Deploy the Windows version of our Twitter web application
 
+Now we'll deploy the Windows version of the twee app.
+
+### <a name="task3.1"></a> Task 3.1: Clone the Demo Repo
 Move back to your Windows Server 2016 virtual machine, and open a PowerShell window.
 
 Let's create a new directory, move into it and then clone the repo:
@@ -304,7 +312,14 @@ remote: Compressing objects: 100% (10/10), done.
 remote: Total 13 (delta 1), reused 10 (delta 1), pack-reused 0
 Unpacking objects: 100% (13/13), done.
 ```
-Now let's move into the tweet app directory, and once again use `docker build` to build a new image.
+
+### <a name="task3.2"></a> Task 3.2: Build and Push the Windows Web App Image
+
+Now let's move into the tweet app directory, buld the image, and push it to Docker Hub. 
+
+#### Build the Windows image
+
+Once again use `docker build` to build a new image.
 
 > **Note**: Be sure to use your docker id when tagging the docker image
 
@@ -328,6 +343,8 @@ Successfully built d74eead7f408
 Successfully tagged <your docker id>/windows_tweet_app:latest
 ```
 > **Note**: It will take a few minutes for your image to build
+
+#### Push the Windows Image
 
 Let's change back to our home directory and log into Docker Hub so we can push your image up to your repository.
 
@@ -359,9 +376,13 @@ f358be10862c: Skipped foreign layer
 latest: digest: sha256:e28b556b138e3d407d75122611710d5f53f3df2d2ad4a134dcf7782eb381fa3f size: 2825
 ```
 
+### <a name="task3.3"></a> Task 3.3: Deploy the Web App
+
 We're going to run your application as a service on our swarm cluster. Because of this we need to issue the `docker service create` command from your manager node. With swarm, any work with the swarm needs to be done from a manager node.
 
 > **Note**: If you want to see what happens when you try to issue swarm commands from a worker simply issue the 'docker node ls' command from your Windows Server 2016 vm. You should see an error indicating that the command can only be run from a manager node.
+
+#### Create the Windows tweet app service
 
 Head back over to your Linux VM (which is our swarm manager) and deploy our Windows tweet app.
 
@@ -372,11 +393,13 @@ $ docker service create \
    --detach=true \
    --name windows_tweet_app \
    --constraint 'node.platform.os == windows' \
-   mikegcoleman/windows_tweet_app
+   <your docker id>/windows_tweet_app
 ```
 > **Note**: In this case we set the constraint to 'node.platform.os == windows' to ensure the service is only started on a Windows-based host.
 
-> **Note**: You'll notice the format for publishing the network ports are different with our Windows application. That's because that this time Windows does not support the integrated ingress load balancing, and we need to expost the ports in "host mode". See the Docker documentation for more information on host mode.  
+> **Note**: You'll notice the format for publishing the network ports are different with our Windows application. That's because that this time Windows does not support the integrated ingress load balancing, and we need to expose the ports in "host mode". See the Docker documentation for more information on host mode.  
+
+#### Check the service
 
 Use `docker service ls` to see if your service is running:
 
@@ -396,17 +419,23 @@ ID                  NAME                  IMAGE                                 
 iw4pj3pb1b2g        windows_tweet_app.1   mikegcoleman/windows_tweet_app:latest   win-pdx-20          Running             Started 2 seconds ago
 ```
 
-Finally, let's visit the web app by pointing our web browser to `http:<windows vm dns name:8081`
+#### Verify the service is running
+
+Finally, let's visit the web app by pointing our web browser to `http:<windows vm dns name>:8081`
 
 > **Note**: Be sure to specify port *8081*
 
-##  Deploying a multi-service hybrid application
+## <a name="task4"></a> Deploying a Multi-OS Application
 
 For our last exercise we'll use a docker compose file to deploy an application that uses a Java front end designed to be deployed on Linux, with a Microsoft SQL Server back end running on windows.
+
+### <a name="task4.1"></a> Task 4.1: Examine the Docker Compose file
 
 Change into the `hybrid-workshop` directory
 
 `$ cd ~/hybrid-workshop`
+
+We'll use a Docker Compose file to instantiate our application. With this file we can define all our services and their parameters, as well as other Docker primatives such as networks. 
 
 Let's look at the Docker Compose file:
 
@@ -453,6 +482,8 @@ One thing that is new is the creation of an overlay network (`atsea`). Overlay n
 
 You may have used Docker Compose before to deploy multi-service applications, but with swarm we use a slightly different command: `docker stack`.
 
+### <a name="task4.2"></a> Task 4.2: Deploy the Application
+
 To deploy a new stack we use `docker stack create` and supply a link to our Docker Compose file as well as a name for our service (`atsea` in this case)
 
 ```
@@ -463,6 +494,8 @@ Creating service atsea_appserver
 ```
 
 The output shows the creation of the two services, and our network.
+
+#### Check the Status of the Application
 
 Using `docker stack ps` will show the state of our services
 
@@ -476,6 +509,8 @@ wgaf4vxptafj        atsea_database.1    sixeyed/atsea-db:mssql    win-pdx-21    
 You can see from the output above the two services were deployed to the two different hosts, and are now up and Running
 
 > **Note**: It can take a few minutes for all services to start. Just keep running the `docker stack ps` command until you see both services with a `DESIRED STATE` of `Running`
+
+### <a name="task4.3"></a> Task 4.3: Verify the Running Application
 
 To see our running web site (an art store) visit `http://<your linux dns name>`.
 
