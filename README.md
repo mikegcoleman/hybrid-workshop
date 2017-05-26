@@ -39,7 +39,7 @@ You will be provided a set of  virtual machines (one Windows and one Linux) runn
 - Linux - install [Remmina](http://www.remmina.org/wp/), or any RDP client you prefer.
 
 ### SSH Client
-- Windows - [Download Putty] (http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)
+- Windows - [Download Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)
 - Linux - Use the built in SSH client
 - Mac - Use the built in SSH client
 
