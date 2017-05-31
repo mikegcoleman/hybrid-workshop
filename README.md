@@ -151,7 +151,7 @@ Our first step will be to create a two node swarm cluster. We'll make the Linux 
 	                "OS": "windows"
 	$ docker node inspect lin-pdx-20 | grep OS
 	                "OS": "linux"
-```
+	```
 
 4. Issue the `docker node inspect` command on your Linux node.
 
