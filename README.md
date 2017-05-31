@@ -253,7 +253,7 @@ Let's start on the Linux node.
 	Username: <your docker id>
 	Password: <your docker id password>
 	Login Succeeded
-```
+	```
 
 4. Use `docker push` to upload your image up to Docker Hub.
 
