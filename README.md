@@ -102,9 +102,8 @@ Our first step will be to create a two node swarm cluster. We'll make the Linux 
 
 	It should end up looking something like this:
 	
-	```
-	docker swarm join --token SWMTKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff 10.0.2.32:2377
-	```
+
+	`docker swarm join --token SWMKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff 10.0.2.32:2377`
 	
 	> **Note**: Do not use the command above. Copy the command from the output you got in your Linux VM when you performed the `docker swarm init`
 
