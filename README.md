@@ -35,11 +35,11 @@ In this lab we'll build a hybrid cluster, and then deploy both a Linux and Windo
 
 - When you see the Linux penguin all the following instructions should be completed in your Linux VM
 
-	![](./images/linux.png) 
+	![](./images/linux75.png) 
 
 - When you see the Windows flag all the subsequent instructions should be completed in your Windows VM. 
 
-	![](./images/windows.png) 
+	![](./images/windows75.png) 
 
 
 ## <a name="prerequisites"></a>Prerequisites
