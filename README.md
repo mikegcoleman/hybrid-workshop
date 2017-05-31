@@ -96,12 +96,11 @@ Our first step will be to create a two node swarm cluster. We'll make the Linux 
 	    10.0.2.32:2377
 	
 	To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
-```
+	```
 
 3. Copy the `docker swarm join` output from the `docker swarm init` commmand that you just issued in your VM and paste it into a text editor. Remove the `\` and make the command a single line.
 
 	It should end up looking something like this:
-	
 
 	`docker swarm join --token SWMKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff 10.0.2.32:2377`
 	
