@@ -29,9 +29,18 @@ In this lab we'll build a hybrid cluster, and then deploy both a Linux and Windo
 
 ## Document conventions
 
-When you encounter a phrase in between `<` and `>`  you are meant to substitute in a different value. 
+- When you encounter a phrase in between `<` and `>`  you are meant to substitute in a different value. 
 
-For instance if you see `$ip = <ip-address>` you would actually type something like `$ip = '10.0.0.4'`
+	For instance if you see `$ip = <ip-address>` you would actually type something like `$ip = '10.0.0.4'`
+
+- When you see the Linux penguin all the following instructions should be completed in your Linux VM
+
+	![](./images/linux.png) 
+
+- When you see the Windows flag all the subsequent instructions should be completed in your Windows VM. 
+
+	![](./images/windows.png) 
+
 
 ## <a name="prerequisites"></a>Prerequisites
 
