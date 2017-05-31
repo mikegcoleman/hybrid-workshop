@@ -105,6 +105,7 @@ Our first step will be to create a two node swarm cluster. We'll make the Linux 
 	```
 	docker swarm join --token SWMTKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff 10.0.2.32:2377
 	```
+	
 	> **Note**: Do not use the command above. Copy the command from the output you got in your Linux VM when you performed the `docker swarm init`
 
 ### <a name="task1.2"></a>Task 1.2: Add a Worker Node
