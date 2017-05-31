@@ -46,19 +46,23 @@ In this lab we'll build a hybrid cluster, and then deploy both a Linux and Windo
 
 You will be provided a set of  virtual machines (one Windows and one Linux) running in Azure, which are already configured with Docker and some base images. You do not need Docker running on your laptop, but you will need a Remote Desktop client to connect to the Windows VM, and an SSH client to connect into the Linux one. 
 
-### RDP Client
+You will also need to sign into Docker Hub to push your Docker images. For this you'll need a Docker ID. 
+
+### 1. RDP Client
+
 - Windows - use the built-in Remote Desktop Connection app.
 - Mac - install [Microsoft Remote Desktop](https://itunes.apple.com/us/app/microsoft-remote-desktop/id715768417?mt=12) from the app store.
 - Linux - install [Remmina](http://www.remmina.org/wp/), or any RDP client you prefer.
 
-### SSH Client
+### 2. SSH Client
+
 - Windows - [Download Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)
 - Linux - Use the built in SSH client
 - Mac - Use the built in SSH client
 
 > **Note**: When you connect to the Windows VM, if you are prompted to run Windows Update, you should cancel out. The labs have been tested with the existing VM state and any changes may cause problems.
 
-### Docker ID
+### 3. Docker ID
 You will build images and push them to Docker Hub, so you can pull them on different Docker hosts. You will need a Docker ID.
 
 - Sign up for a free Docker ID on [Docker Hub](https://hub.docker.com)
@@ -67,38 +71,41 @@ You will build images and push them to Docker Hub, so you can pull them on diffe
 
 Our first step will be to create a two node swarm cluster. We'll make the Linux node the manager node, and our Windows node will be the worker node. 
 
-> **Note**: Window Server 2016 machiens can also be manager nodes.
+> **Note**: Window Server 2016 machines can also be manager nodes.
 
 ### <a name="task1.1"></a>Task 1.1: Create the Swarm Manager
 
-Either in a terminal window (Mac or Linux) or using Putty (Windows) SSH into your Linux node. The DNS name, username and password should have been provided to you.
+![](./images/linux75.png)
 
+1. Either in a terminal window (Mac or Linux) or using Putty (Windows) SSH into your Linux node. The DNS name, username and password should have been provided to you.
+
+	`ssh docker@<linux node DNS name>.westus2.cloudapp.azure.com`
+
+2. Create your swarm by issuing the `docker swarm init` command. This command will create a swarm cluster, and add the current node as a manager.\
+
+	Below is an example of what you should see in your VM. 
+
+	```
+	$ docker swarm init
+	Swarm initialized: current node (z42u37g25lrmcgbpyef9fd06r) is now a manager.
+	
+	To add a worker to this swarm, run the following command:
+	
+	    docker swarm join \
+	    --token SWMTKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff \
+	    10.0.2.32:2377
+	
+	To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 ```
-ssh docker@<linux node DNS name>.westus2.cloudapp.azure.com
-```
 
-Create your swarm by issuing the `docker swarm init` command. This command will create a swarm cluster, and add the current node as a manager.
+3. Copy the `docker swearm join` output from the `docker swarm init` commmand in your VM and paste it into a text edito. Then remove the `\` and make the command a single line.
 
-```
-$ docker swarm init
-Swarm initialized: current node (z42u37g25lrmcgbpyef9fd06r) is now a manager.
-
-To add a worker to this swarm, run the following command:
-
-    docker swarm join \
-    --token SWMTKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff \
-    10.0.2.32:2377
-
-To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
-```
-
-Copy the join command and paste it into a text editor, then remove the `\` and make the command a single line.
-
-It should end up looking something like this:
-
-```
-docker swarm join --token SWMTKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff 10.0.2.32:2377
-```
+	It should end up looking something like this:
+	
+	```
+	docker swarm join --token SWMTKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff 10.0.2.32:2377
+	```
+	> **Note**: Do not use the command above. Copy the command from the output you got in your Linux vm when you performed the `docker swarm init`
 
 ### <a name="task1.2"></a>Task 1.2: Add a Worker Node
 
@@ -107,6 +114,7 @@ Use your RDP client to connect into your Windows node. The DNS name, username, a
 Once connected to your Windows Server 2016 VM open a Powershell window by clicking the `Start` button (which looks like a flag in the lower left corner) and then click the Windows Power Shell icon (Do NOT choose Windows Powershell ISE) near the top right.
 
 In the Powershell window paste in your Docker swarm join command. This command will contact the swarm manager you just created and use the token supplied to join the Swarm cluster.
+
 
 ```
 docker swarm join --token SWMTKN-1-4qm2iur0lkqjmmxlfivyj7rdn9nsso216vaxybhojgmbwa3su7-3vzae67xszr1yphz6flr9emff 10.0.2.32:2377
