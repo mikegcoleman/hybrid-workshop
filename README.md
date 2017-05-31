@@ -169,7 +169,6 @@ Our first step will be to create a two node swarm cluster. We'll make the Linux 
 	                "OS": "linux"
 	            },
 	```
-	
 	What we want to notice here is the hierarchy. We inspected the `node`, and the `OS` is listed under `Platform` so the full path for the `OS` label is `node.platform.OS`. This information will be used in a later part of the lab.
 
 ## <a name="task2"></a>Task 2: Deploy a Linux Web App
