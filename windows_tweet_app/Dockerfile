@@ -13,6 +13,7 @@ RUN Set-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST' -filter 'syst
 WORKDIR C:\
 COPY start.ps1 .
 COPY index.html C:\inetpub\wwwroot
+COPY windows.png C:\inetpub\wwwroot
 
 CMD .\start.ps1
 
