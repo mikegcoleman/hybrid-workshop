@@ -479,9 +479,11 @@ For our last exercise we'll use a docker compose file to deploy an application t
 
 ### <a name="task4.1"></a> Task 4.1: Examine the Docker Compose file
 
-Change into the `hybrid-workshop` directory
+![](./images/linux75.png)
 
-`$ cd ~/hybrid-workshop`
+1. Make sure you are in your Linux VM, and change into the `hybrid-workshop` directory
+
+	`$ cd ~/hybrid-workshop`
 
 We'll use a Docker Compose file to instantiate our application. With this file we can define all our services and their parameters, as well as other Docker primatives such as networks. 
 
@@ -532,34 +534,34 @@ You may have used Docker Compose before to deploy multi-service applications, bu
 
 ### <a name="task4.2"></a> Task 4.2: Deploy the Application
 
-To deploy a new stack we use `docker stack create` and supply a link to our Docker Compose file as well as a name for our service (`atsea` in this case)
+![](./images/linux75.png)
 
-```
-$ docker stack deploy -c docker-compose.yaml atsea
-Creating network atsea_atsea
-Creating service atsea_database
-Creating service atsea_appserver
-```
+1. Use `docker stack create` and supply a link to our Docker Compose file as well as a name for our stack (`atsea` in this case) to deploy the app. 
 
-The output shows the creation of the two services, and our network.
+	```
+	$ docker stack deploy -c docker-compose.yaml atsea
+	Creating network atsea_atsea
+	Creating service atsea_database
+	Creating service atsea_appserver
+	```
 
-#### Check the Status of the Application
+	The output shows the creation of the two services, and our network.
 
-Using `docker stack ps` will show the state of our services
+2. Using `docker stack ps` will show the state of our services
 
-```
-$ docker stack ps atsea
-ID                  NAME                IMAGE                     NODE                DESIRED STATE       CURRENT STATE           ERROR               PORTS
-dflu6i3po6ur        atsea_appserver.1   sixeyed/atsea-app:mssql   lin-pdx-21          Running             Running 7 minutes ago                       *:80->8080/tcp
-wgaf4vxptafj        atsea_database.1    sixeyed/atsea-db:mssql    win-pdx-21          Running             Running 6 minutes ago                       *:1433->1433/tcp
-```
-
-You can see from the output above the two services were deployed to the two different hosts, and are now up and Running
-
-> **Note**: It can take a few minutes for all services to start. Just keep running the `docker stack ps` command until you see both services with a `DESIRED STATE` of `Running`
+	```
+	$ docker stack ps atsea
+	ID                  NAME                IMAGE                     NODE                DESIRED STATE       CURRENT STATE           ERROR               PORTS
+	dflu6i3po6ur        atsea_appserver.1   sixeyed/atsea-app:mssql   lin-pdx-21          Running             Running 7 minutes ago                       *:80->8080/tcp
+	wgaf4vxptafj        atsea_database.1    sixeyed/atsea-db:mssql    win-pdx-21          Running             Running 6 minutes ago                       *:1433->1433/tcp
+	```
+	
+	You can see from the output above the two services were deployed to the two different hosts, and are now up and Running
+	
+	> **Note**: It can take a few minutes for all services to start. Just keep running the `docker stack ps` command until you see both services with a `DESIRED STATE` of `Running`
 
 ### <a name="task4.3"></a> Task 4.3: Verify the Running Application
 
-To see our running web site (an art store) visit `http://<your linux dns name>`.
+1. To see our running web site (an art store) visit `http://<your linux dns name>`.
 
 This concludes our workshop, thanks for attending. 
