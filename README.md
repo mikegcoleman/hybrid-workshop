@@ -449,7 +449,7 @@ We're going to run your application as a service on our swarm cluster. Because o
 	
 	> **Note**: In this case we set the constraint to 'node.platform.os == windows' to ensure the service is only started on a Windows-based host.
 	
-	> **Note**: You'll notice the format for publishing the network ports are different with our Windows application. That's because that this time Windows does not support the integrated ingress load balancing, and we need to expose the ports in "host mode". See the Docker documentation for more information on host mode.  
+	> **Note**: You'll notice the format for publishing the network ports are different with our Windows application. That's because at this time Windows does not support swarm mode's integrated ingress load balancing, and we need to expose the ports in "host mode". See the [Docker documentation](https://docs.docker.com/engine/swarm/services/#publish-ports) for more information on publishing ports with swarm mode.  
 
 3. Use `docker service ls` to see if your service is running:
 	
@@ -480,10 +480,6 @@ For our last exercise we'll use a docker compose file to deploy an application t
 ### <a name="task4.1"></a> Task 4.1: Examine the Docker Compose file
 
 ![](./images/linux75.png)
-
-1. Make sure you are in your Linux VM, and change into the `hybrid-workshop` directory
-
-	`$ cd ~/hybrid-workshop`
 
 We'll use a Docker Compose file to instantiate our application. With this file we can define all our services and their parameters, as well as other Docker primatives such as networks. 
 
@@ -536,7 +532,11 @@ You may have used Docker Compose before to deploy multi-service applications, bu
 
 ![](./images/linux75.png)
 
-1. Use `docker stack create` and supply a link to our Docker Compose file as well as a name for our stack (`atsea` in this case) to deploy the app. 
+1. Make sure you are in your Linux VM, and change into the `hybrid-workshop` directory
+
+	`$ cd ~/hybrid-workshop`
+
+2. Use `docker stack create` and supply a link to our Docker Compose file as well as a name for our stack (`atsea` in this case) to deploy the app. 
 
 	```
 	$ docker stack deploy -c docker-compose.yaml atsea
