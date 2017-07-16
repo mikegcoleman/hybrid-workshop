@@ -343,23 +343,23 @@ There is a Windows Server 2016 VHD that contains our Windows Tweet App stored in
 
 2. Use Image2Docker's `ConvertTo-Dockerfile` command to create a dockerfile from the VHD. 
 
-Copy and paste the command below into your Powershell window. 
+	Copy and paste the command below into your Powershell window. 
 
-```
-ConvertTo-Dockerfile -ImagePath c:\ws2016.vhd `
-                     -Artifact IIS `
-                     -OutputPath C:\windowstweetapp `
-                     -Verbose
-```
+	```
+	ConvertTo-Dockerfile -ImagePath c:\ws2016.vhd `
+	                     -Artifact IIS `
+	                     -OutputPath C:\windowstweetapp `
+	                     -Verbose
+	```
 
 
-* `ImagePath` specifies where the VHD can be found
-	
-* `Artifact` specifies what specific feature or code to look for
-	
-* `OutputPath` specifies where to write the dockerfile and other items
-	
-* `Verbose` instructs the script to provide extra output. 
+	* `ImagePath` specifies where the VHD can be found
+		
+	* `Artifact` specifies what feature or code to look for
+		
+	* `OutputPath` specifies where to write the dockerfile and other items
+		
+	* `Verbose` instructs the script to provide extra output. 
 
 When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 
