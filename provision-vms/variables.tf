@@ -4,7 +4,7 @@ variable "resource_group" {
   description = "Name of the resource group to use for VMs"
   type = "string"
 # add the name of the resource group you want created (cannot exist)
-  default = "mike-pa"
+  default = ""
 }
 
 variable "storage_account" {
@@ -24,7 +24,7 @@ variable "dns_prefix" {
 variable "region" {
   description = "Azure region to use"
   type = "string"
-# Supply a default region (e.g. westus2) 
+# Supply a default region (e.g. westus2)
   default = ""
 }
 
