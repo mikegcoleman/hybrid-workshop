@@ -18,10 +18,10 @@ In this lab we'll build a hybrid cluster, and then deploy both a Linux and Windo
 >   * [Task 2.1: Clone the Demo Repo](#task2.1)
 >   * [Task 2.2: Build and Push Your Image to Docker Hub](#task2.2)
 >   * [Task 2.3: Deploy the Web App](#task2.3)
-> * [Task 3: Deploy a Windows Web App Service](#task3)
->   * [Task 3.1: Create Dockerfile with Image2Docker](#task3.1)
->   * [Task 3.2: Build and Push Your Image to Docker Hub](#task3.2)
->   * [Task 3.3: Deploy the Web App](#task3.3)
+> * [Task 3: Deploy a Windows Web App Service](#task2)
+>   * [Task 3.1: Clone the Demo Repo](#task2.1)
+>   * [Task 3.2: Build and Push Your Image to Docker Hub](#task2.2)
+>   * [Task 3.3: Deploy the Web App](#task2.3)
 > * [Task 4: Deploy a Multi-OS Application](#task4)
 >   * [Task 4.1: Examine the Docker Compose File](#task4.1)
 >   * [Task 4.2: Deploy the Application](#task4.2)
@@ -327,38 +327,32 @@ Services are application building blocks (although in many cases an application 
 
 ## <a name="task3"></a>Task 3: Deploy the Windows version of our Twitter web application
 
-Now we'll deploy the Windows version of the tweet app.
+Now we'll deploy the Windows version of the twee app.
 
-### <a name="task3.1"></a> Task 3.1: Create the dockerfile with Image2Docker
-
-There is a Windows Server 2016 VHD that contains our Windows Tweet App stored in `c:\` on your cloud-based VM. We're going to use Image2Docker to scan the VHD, and get a dockerfile. We'll build the dockerfile as we did in the previous step, push it to the hub, and then deploy our Windows tweet app. 
+### <a name="task3.1"></a> Task 3.1: Clone the Demo Repo
 
 ![](./images/windows75.png)
 
 1. Move back to your Windows Server 2016 virtual machine, and open a PowerShell window.
 
-2. Use Image2Docker's `ConvertTo-Dockerfile` command to create a dockerfile from the VHD. 
+2. Create a new directory
 
-Copy and paste the command below into your Powershell window. 
+	`PS C:\Users\docker> mkdir scm`
 
-```
-ConvertTo-Dockerfile -ImagePath c:\ws2016.vhd `
-                     -Artifact IIS `
-                     -OutputPath C:\windowstweetapp `
-                     -Verbose
-```
+3. Change into the newly created directory
 
+	`PS C:\Users\docker> cd .\scm`
 
-* `ImagePath` specifies where the VHD can be found
-	
-* `Artifact` specifies what specific feature or code to look for
-	
-* `OutputPath` specifies where to write the dockerfile and other items
-	
-* `Verbose` instructs the script to provide extra output. 
+4. Clone the demo repo
 
-When the process completes you'll find a dockerfile in `c:\windowstweetapp`
-
+	```
+	C:\Users\docker\scm> git clone https://github.com/mikegcoleman/hybrid-workshop.git
+	Cloning into 'hybrid-workshop'...
+	remote: Counting objects: 13, done.
+	remote: Compressing objects: 100% (10/10), done.
+	remote: Total 13 (delta 1), reused 10 (delta 1), pack-reused 0
+	Unpacking objects: 100% (13/13), done.
+	```
 
 ### <a name="task3.2"></a> Task 3.2: Build and Push the Windows Web App Image
 
@@ -366,7 +360,7 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 
 1. CD into the application directory
 
-	`PS C:\Users\docker> cd c:\windowstweetapp\`
+	`PS C:\Users\docker\scm> cd .\hybrid-workshop\windows_tweet_app\`
 
 
 2. Use `docker build` to build your Windows tweet web app Docker image.
@@ -396,6 +390,10 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 	Successfully tagged <your docker id>/windows_tweet_app:latest
 	```
 	> **Note**: It will take a few minutes for your image to build. If it takes more than 5 minutes move into your powershell window and press `Enter`. Sometimes the Powershell window will not update the current status of the build process. 
+
+3. Change back to your home directory
+
+	`PS C:\Users\docker\scm\hybrid-workshop\windows_tweet_app> cd ~`
 	
 4. Log into Docker hub
 
