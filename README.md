@@ -112,6 +112,10 @@ Our first step will be to create a two node swarm cluster. We'll make the Linux 
 
 1. Use your RDP client to connect into your Windows node. The DNS name, username, and password should have been provided to you. 
 
+> **Note**: If you are prompted to make your machine visible on the network choose 'No'
+
+> **Note**: DO NOT RUN WINDOWS UPDATE. You will put your machine in an unreachable state until the update finishes, and even then the lab has not been validated on any other configuration. 
+
 2. Open a Powershell window by clicking the `Start` button (which looks like a flag in the lower left corner) and then click the Windows Power Shell icon (Do NOT choose Windows Powershell ISE) near the top right.
 
 3. In the Powershell window paste in the `docker swarm join` command you copied from your Linux VM. This command will contact the swarm manager you just created and use the token supplied to join the Swarm cluster.
