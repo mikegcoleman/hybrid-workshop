@@ -1,5 +1,5 @@
 # Deploying Multi-OS applications to Docker Swarm
-With the release of Docker overlay networking for Windows Server 2016, it's now possible to create swarm clusters that include Windows Servers. This could be an all Windows cluster, or a hybrid cluster of Linux and Windows machines. 
+With the release of Docker overlay networking for Windows Server 2016, it's not possible to create swarm clusters that include Windows Servers. This could be an all Windows cluster, or a hybrid cluster of Linux and Windows machines. 
 
 In this lab we'll build a hybrid cluster, and then deploy both a Linux and Windows web app, as well as an application that includes both Windows and Linux components. 	
 
