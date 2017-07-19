@@ -542,7 +542,7 @@ You may have used Docker Compose before to deploy multi-service applications, bu
 
 	`$ cd ~/hybrid-workshop`
 
-2. Use `docker stack create` and supply a link to our Docker Compose file as well as a name for our stack (`atsea` in this case) to deploy the app. 
+2. Use `docker stack deploy` and supply a link to our Docker Compose file as well as a name for our stack (`atsea` in this case) to deploy the app. 
 
 	```
 	$ docker stack deploy -c docker-compose.yaml atsea
