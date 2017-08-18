@@ -132,9 +132,9 @@ Start the UCP installation on the current node, and make it your UCP manager.
 	As an example:
 
 	```
-You may enter additional aliases (SANs) now or press enter to proceed with the above list.
-  Additional aliases: 52.183.42.41 pdx-lin-01-c.westus2.cloudapp.azure.com
-  ```
+	You may enter additional aliases (SANs) now or press enter to proceed with the above list.
+  	Additional aliases: 52.183.42.41 pdx-lin-01-c.westus2.cloudapp.azure.com
+  	```
 
 You'll see some additonal output as the UCP manager is installed
 
