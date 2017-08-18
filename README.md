@@ -54,9 +54,9 @@ When this guide refers to `<linux node b>` that would be the node with the OS co
 ### Virtual Machine Roles
 The cluster you will be building will be comprised of three nodes - a Linux manager, a Linux Worker and a Windows worker. We will also have a linux node and a windows node that will serve as workstations - you'll connect to these machines to do things like build and push docker images. 
 
-The **A** nodes are your workstation nodes
-The **B** nodes are your worker nodes
-The **C** node is you manager node
+* The **A** nodes are your workstation nodes
+* The **B** nodes are your worker nodes
+* The **C** node is you manager node
 
 ![](./images/vm_roles.png)
 
