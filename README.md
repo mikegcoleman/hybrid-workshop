@@ -1,7 +1,6 @@
-# Deploying Multi-OS applications to Docker Swarm
-With the release of Docker overlay networking for Windows Server 2016, it's not possible to create swarm clusters that include Windows Servers. This could be an all Windows cluster, or a hybrid cluster of Linux and Windows machines.
+# Deploying Multi-OS applications to Docker EE
 
-In this lab we'll build a hybrid cluster, and then deploy both a Linux and Windows web app, as well as an application that includes both Windows and Linux components. 	
+In this lab we'll build a hybrid Docker EE cluster, and then deploy both a Linux and Windows web app, as well as an application that includes both Windows and Linux components. 	
 
 > **Difficulty**: Intermediate (assumes basic familiarity with Docker)
 
@@ -42,11 +41,7 @@ In this lab we'll build a hybrid cluster, and then deploy both a Linux and Windo
 	![](./images/windows75.png)
 
 
-## <a name="prerequisites"></a>Prerequisites
-
-You will be provided a set of five virtual machines (Two Windows and three Linux), which are already configured with Docker and some base images. You do not need Docker running on your laptop, but you will need a Remote Desktop client to connect to the Windows VM, and an SSH client to connect into the Linux one.
-
-### 1. Virtual Machine Naming Conventions
+### Virtual Machine Naming Conventions
 Your VMs are named in the following convention prefix-os-cluster number-node id.westus2.cloudapp.azure.com
 
 * **Prefix** is a unique prefix for this workshop
@@ -56,14 +51,25 @@ Your VMs are named in the following convention prefix-os-cluster number-node id.
 
 When this guide refers to `<linux node b>` that would be the node with the OS code `lin` and the node ID of `b` (for example `pdx-lin-01-b`>
 
+### Virtual Machine Roles
+The cluster you will be building will be comprised of three nodes - a Linux manager, a Linux Worker and a Windows worker. We will also have a linux node and a windows node that will serve as workstations - you'll connect to these machines to do things like build and push docker images. 
 
-### 2. RDP Client
+The **A** nodes are your workstation nodes
+The **B** nodes are your worker nodes
+The **C** node is you manager node
+
+![](./images/vm_roles.png)
+
+## <a name="prerequisites"></a>Prerequisites
+
+You will be provided a set of five virtual machines (Two Windows and three Linux), which are already configured with Docker and some base images. You do not need Docker running on your laptop, but you will need a Remote Desktop client to connect to the Windows VM, and an SSH client to connect into the Linux one.
+### 1. RDP Client
 
 - Windows - use the built-in Remote Desktop Connection app.
 - Mac - install [Microsoft Remote Desktop](https://itunes.apple.com/us/app/microsoft-remote-desktop/id715768417?mt=12) from the app store.
 - Linux - install [Remmina](http://www.remmina.org/wp/), or any RDP client you prefer.
 
-### 3. SSH Client
+### 2. SSH Client
 
 - Windows - [Download Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)
 - Linux - Use the built in SSH client
@@ -114,16 +120,13 @@ Start the UCP installation on the current node, and make it your UCP manager.
 	$ docker container run --rm -it --name ucp \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	docker/ucp:2.2.0 install \
+	--admin-username docker \
+	--admin-password Docker2017 \
 	--host-address <linux node c private IP address> \
 	--interactive
 	```
 
-3. Provide and Admin username and password when prompted:
-
-		* Admin Username: docker
-		* Admin Password: Docker2017
-
-	The installer will pull some images, and then ask you to supply additional subject alternative names (SANs)
+The installer will pull some images, and then ask you to supply additional subject alternative names (SANs)
 
 4. When prompted for `Additional aliases` you need to supply BOTH the **PUBLIC IP** and **Fully Qualified Domain Name (FQDN)** of Linux Node **C** separated by spaces
 
@@ -254,7 +257,7 @@ Like UCP, DTR uses a single Docker container to bootstrap the install process. I
 	Status: Downloaded newer image for docker/dtr:2.3.0
     ```
     
-3. Run the bootstrap container to install install DTR. 
+3. Run the bootstrap container to install DTR. 
 
 	You will need to supply three inputs
 	
@@ -264,11 +267,11 @@ Like UCP, DTR uses a single Docker container to bootstrap the install process. I
 	
    ```
 	$ docker run -it --rm docker/dtr install \
-  --dtr-external-url <linux node b FQDN> \
-  --ucp-node <linux node b hostname> \
-  --ucp-username docker \
-  --ucp-url <linux node c / UCP manager URL with port #> \
-  --ucp-insecure-tls
+	--dtr-external-url <linux node b FQDN> \
+	--ucp-node <linux node b hostname> \
+	--ucp-username docker \
+	--ucp-url <linux node c / UCP manager URL with port #> \
+	--ucp-insecure-tls
 	```
 
 4. Enter `Docker2017` as the password when prompted. 
