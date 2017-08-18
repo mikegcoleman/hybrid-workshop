@@ -1,0 +1,20 @@
+
+
+    docker service create \
+   --detach=true \
+   -p 8080:80 \
+   --name linux_tweet_app \
+   --constraint 'node.platform.os == linux' \
+   mikegcoleman/linux_tweet_app:sunday
+
+   http://mtc-lin-01.eastus.cloudapp.azure.com:8080/
+
+   docker service create \
+   --name windows_tweet_app \
+   --publish mode=host,target=80,published=8088 \
+   --detach=true \
+   --name windows_tweet_app \
+   --constraint 'node.platform.os == windows' \
+   mikegcoleman/windows_tweet_app:sunday
+
+   http://mtc-win-01.eastus.cloudapp.azure.com:8088/

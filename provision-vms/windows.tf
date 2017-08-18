@@ -62,6 +62,12 @@ resource "azurerm_public_ip" "linux" {
   resource_group_name          = "${azurerm_resource_group.global.name}"
 }
 
+Output "test" {
+  public_ip = "${azurerm_public_ip.linux.ip_address}"
+}
+
+/*
+
 # build windows vms
 
 resource "azurerm_storage_container" "windows" {
@@ -137,6 +143,8 @@ resource "azurerm_virtual_machine" "linux" {
         admin_username = "docker"
         admin_password = "Docker2017"
     }
+*/
+
 /*
     os_profile_linux_config {
         disable_password_authentication = false
