@@ -106,9 +106,9 @@ Start the UCP installation on the current node, and make it your UCP manager.
   	```
 	2.2.0: Pulling from docker/ucp
 	88286f41530e: Pull complete
-	18ecebf1060f: Pull complete
-	396414c02f6f: Pull complete
-	Digest: sha256:5cd211f67e5c1f22cd422f365281d8422dd66179a0934e1f1a1ca9ab8e394038
+	5ee9b2a2067a: Pull complete
+	8f1603d2f00b: Pull complete
+	Digest: sha256:a41a08269b39377787203517c989a0001d965bb457b45879ab3a7c1e244c9599
 	Status: Downloaded newer image for docker/ucp:2.2.0
 	```
 
