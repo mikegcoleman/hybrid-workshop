@@ -9,7 +9,7 @@ In this lab we'll build a hybrid Docker EE cluster, and then deploy both a Linux
 > **Tasks**:
 >
 > * [Prerequisites](#prerequisites)
-> * [Task 1: Build a Hybrid Swarm](#task1)
+> * [Task 1: Build a Docker EE Cluster](#task1)
 >   * [Task 1.1: Create the Swarm Manager](#task1.1)
 >   * [Task 1.2: Add a Worker Node](#task1.2)
 >   * [Task 1.3: Examine the Cluster](#task1.3)
