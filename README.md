@@ -10,17 +10,19 @@ In this lab we'll build a hybrid Docker EE cluster, and then deploy both a Linux
 >
 > * [Prerequisites](#prerequisites)
 > * [Task 1: Build a Docker EE Cluster](#task1)
->   * [Task 1.1: Create the Swarm Manager](#task1.1)
->   * [Task 1.2: Add a Worker Node](#task1.2)
->   * [Task 1.3: Examine the Cluster](#task1.3)
-> * [Task 2: Deploy a Linux Web App Service](#task2)
+>   * [Task 1.1: Install the UCP manager](#task1.1)
+>   * [Task 1.2: Install a Linux worker node](#task1.2)
+>   * [Task 1.3: Install a Windows worker node](#task1.3)
+>   * [Task 1.4: Install DTR and Create Two Repositories](#task1.4)
+>   * [Task 1.5: Install Self Signed Certs on All Nodes](#task1.5)
+> * [Task 2: Deploy a Linux Web App](#task2)
 >   * [Task 2.1: Clone the Demo Repo](#task2.1)
->   * [Task 2.2: Build and Push Your Image to Docker Trusted Registry](#task2.2)
->   * [Task 2.3: Deploy the Web App](#task2.3)
-> * [Task 3: Deploy a Windows Web App Service](#task3)
->   * [Task 3.1: Create Dockerfile with Image2Docker](#task3.1)
+>   * [Task 2.2: Build and Push the Linux Web App Image](#task2.2)
+>   * [Task 2.3: Deploy the Web App using UCP](#task2.3)
+> * [Task 3: Deploy a Windows Web App](#task3)
+>   * [Task 3.1: Create the Dockerfile with Image2Docker](#task3.1)
 >   * [Task 3.2: Build and Push Your Image to Docker Trusted Registry](#task3.2)
->   * [Task 3.3: Deploy the Web App](#task3.3)
+>   * [Task 3.3: Deploy the Windows Web App](#task3.3)
 > * [Task 4: Deploy a Multi-OS Application](#task4)
 >   * [Task 4.1: Examine the Docker Compose File](#task4.1)
 >   * [Task 4.2: Deploy the Application](#task4.2)
@@ -81,7 +83,7 @@ You will be provided a set of five virtual machines (Two Windows and three Linux
 
 > **Note**: When you connect to the Windows VM, if you are prompted to run Windows Update, you should cancel out. The labs have been tested with the existing VM state and any changes may cause problems.
 
-## <a name="task1"></a>Task 1: Install Universal Control Plane (UCP) and Docker Trusted Registry (DTR)
+## <a name="task1"></a>Task 1: Build a Docker EE Cluster
 
 In this first step we're going to install Docker Universal Control Plane (UCP) and Docker Trusted Registry. UCP is a web-based control plane for Docker containers that can deploy and manage Docker-based applications across Windows and Linux nodes. Docker Trusted Registry is a private registry server for story your Docker images.
 
@@ -534,7 +536,7 @@ After a few seconds you should see a green dot next to your service name. Once y
 > **Note**: You want to go to `http://` not `https://`
 
 
-## <a name="task3"></a>Task 3: Deploy the Windows version of our Twitter web application
+## <a name="task3"></a>Task 3: Deploy a Windows Web App
 
 Now we'll deploy the Windows version of the tweet app.
 
@@ -569,7 +571,7 @@ There is a Windows Server 2016 VHD that contains our Windows Tweet App stored in
 When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 
 
-### <a name="task3.2"></a> Task 3.2: Build and Push the Windows Web App Image
+### <a name="task3.2"></a> Task 3.2: Build and Push Your Image to Docker Trusted Registry
 
 ![](./images/windows75.png)
 
@@ -737,11 +739,7 @@ You may have used Docker Compose before to deploy multi-service applications, bu
 
 3. In the upper right click `Create Stack`
 
-<<<<<<< HEAD
 4. Enter `atsea` under `NAME`
-=======
-2. Use `docker stack deploy` and supply a link to our Docker Compose file as well as a name for our stack (`atsea` in this case) to deploy the app. 
->>>>>>> baf5968cf6c00cd9048464f58f57f1f76ec8caa4
 
 5. Select `Services` under `MODE`
 
