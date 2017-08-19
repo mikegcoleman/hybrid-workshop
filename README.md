@@ -154,7 +154,7 @@ You'll see some additonal output as the UCP manager is installed
 	INFO[0058] Username: docker
 	INFO[0058] Password: (your admin password)
 	
-The next thing we need to do is upload your Docker EE license. For this workshop we are supplying a short-term  license, you can download your own 30-day trial license from the Docker Store.
+The next thing we need to do is upload your Docker EE license. For this workshop we are supplying a short-term  license, you can download your own 30-day trial license from the [Docker Store](https://store.docker.com/editions/enterprise/docker-ee-trial).
 
 1. Navigate to the UCP console by pointing your broswer at `https://<linux node c public ip address>`
 
