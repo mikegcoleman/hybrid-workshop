@@ -81,7 +81,7 @@ You will be provided a set of five virtual machines (Two Windows and three Linux
 
 In this first step we're going to install Docker Universal Control Plane (UCP) and Docker Trusted Registry. UCP is a web-based control plane for Docker containers that can deploy and manage Docker-based applications across Windows and Linux nodes. Docker Trusted Registry is a private registry server for story your Docker images.
 
-We'll start by installing the UCP manager. Next we'll add a Linux worker node, followed by installing Docker Trusted Registry. Then we'll add a Windows worker node, and finally we'll add our self-signed certs to each of the nodes to ensure they can communciate securely with DTR.
+We'll start by installing the UCP manager. Next we'll add a Linux worker node, followed by installing Docker Trusted Registry. Then we'll add a Windows worker node, and finally we'll add our self-signed certs to each of the nodes to ensure they can communicate securely with DTR.
 
 > **Note**: In the current version of UCP manager nodes must be Linux. Worker nodes can be Windows or Linux
 
@@ -139,7 +139,7 @@ The installer will pull some images, and then ask you to supply additional subje
   	Additional aliases: 52.183.42.41 pdx-lin-01-c.westus2.cloudapp.azure.com
   	```
 
-You'll see some additonal output as the UCP manager is installed
+You'll see some additional output as the UCP manager is installed
 
 	
 	INFO[0000] Initializing a new swarm at 10.0.2.7
@@ -154,9 +154,9 @@ You'll see some additonal output as the UCP manager is installed
 	INFO[0058] Username: docker
 	INFO[0058] Password: (your admin password)
 	
-The next thing we need to do is upload your Docker EE license. For this workshop we are supplying a short-term  license, you can download your own 30-day trial license from the Docker Store.
+The next thing we need to do is upload your Docker EE license. For this workshop we are supplying a short-term license, you can download your own 30-day trial license from the Docker Store.
 
-1. Navigate to the UCP console by pointing your broswer at `https://<linux node c public ip address>`
+1. Navigate to the UCP console by pointing your browser at `https://<linux node c public ip address>`
 
 > **Note**: You need to use `https:` NOT `http`
 
@@ -295,7 +295,7 @@ Like UCP, DTR uses a single Docker container to bootstrap the install process. I
 	
 	> **Note**: Because UCP uses self-signed SSL certs, your web browser may warn you that your connection is not secure. You will need to click through that warning. An example from Chrome is shown below.
 	
-Now that DTR is installed, let's go ahead and create a couple of repositories to hold our tweet app imaegs. Repositories are how images are organized within a DTR server. Each image gets pushed to its own repository. Multiple images can be stored within a repository by supplying a different tag to each version. 
+Now that DTR is installed, let's go ahead and create a couple of repositories to hold our tweet app images. Repositories are how images are organized within a DTR server. Each image gets pushed to its own repository. Multiple images can be stored within a repository by supplying a different tag to each version. 
 
 2. From the left hand menu click `Repositories`
 
@@ -303,7 +303,7 @@ Now that DTR is installed, let's go ahead and create a couple of repositories to
 
 4. Under `REPOSITORY NAME` type `linux_tweet_app` and click `Save`
 
-Let's repeat this process to createa repository for our Windows tweet app.
+Let's repeat this process to create a repository for our Windows tweet app.
 
 3. Click the green `New repository` button on the right hand side of the screen. This brings up the new repository dialogue. 
 
@@ -313,7 +313,7 @@ Congratulations you've installed Docker Trusted Registry, and have created two n
 
 ### <a name="task1.5"></a>Task 1.5: Install Self Signed Certs on All Nodes
 
-Docker uses TLS to ensure the identity of the Docker Trusted Registry. In a production environment you would use certs that come from a trusted certificate authority (CA). However, by default when you install UCP and DTR they use self-signd certs. These self-signed certs are not automatically trusted by the Docker engine. In order for them to be trusted, we need to copy down the root CA cert from the DTR server onto each node in the cluster. There is a script on each of your nodes that will do this for you 
+Docker uses TLS to ensure the identity of the Docker Trusted Registry. In a production environment you would use certs that come from a trusted certificate authority (CA). However, by default when you install UCP and DTR they use self-signed certs. These self-signed certs are not automatically trusted by the Docker engine. In order for them to be trusted, we need to copy down the root CA cert from the DTR server onto each node in the cluster. There is a script on each of your nodes that will do this for you 
 
 > **Note**: This step is only necessary in POC environments where trusted 3rd party certs are not used
 
@@ -338,7 +338,7 @@ Perform the following steps on all 3 of your Linux nodes (**A**, **B**, **C**)
 		done.
 3. Log into the DTR server from the command line to ensure the cert was copied correctly. 
 
-	> **Note**: Be sure to substute the FQDN of your **B** Linux node
+	> **Note**: Be sure to substitute the FQDN of your **B** Linux node
 	
 	> **Note**: If you see an x509 certificate is from an unknown source error the cert didn't copy correctly, just rerun the above command. 
 	
@@ -364,7 +364,7 @@ Now we need to do something similar on the two Windows nodes. Perform the follow
 
 4. Log into the DTR server from the command line.
 
-	> **Note**: Be sure to substute the FQDN of Linux node **B**
+	> **Note**: Be sure to substitute the FQDN of Linux node **B**
 	
 	```
 	$ docker login <linux node b fqdn>
@@ -482,7 +482,7 @@ Now let's run our application by by creating a new service.
 
 Services are application building blocks (although in many cases an application will only have one service, such as this example). Services are based on a single Docker image. Tasks are the individual Docker containers that execute the application. When you create a new service you instantiate at least one task automatically, but you can scale the number of tasks up to meet the needs of your service.
 
-1. In your web broswer navigate to your UCP server (`https://<linux node c fqdn>`)
+1. In your web browser navigate to your UCP server (`https://<linux node c fqdn>`)
 
 2. In the left hand menu click `Services`
 
@@ -628,7 +628,7 @@ Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It
 * We will use a constraint to put the workload on a Windows node instead of Linux
 * Windows does not currently support ingress load balancing, so we'll exposer the ports in `host` mode using `dnsrr` 
 
-1. In your web broswer navigate to your UCP server (`https://<linux node c fqdn>`)
+1. In your web browser navigate to your UCP server (`https://<linux node c fqdn>`)
 
 2. In the left hand menu click `Services`
 
@@ -750,7 +750,7 @@ The UI shows your stack (`atsea`) and that it's comprised of 2 services and 1 ne
 
 	![](./images/inspect_resoource.png) 
 	
-	Here you can see your two services running. It may take a few minutes for hte databased service to come up (the dot to turn green). Once it does move on to the next section. 
+	Here you can see your two services running. It may take a few minutes for the databased service to come up (the dot to turn green). Once it does move on to the next section. 
 
 
 ### <a name="task4.3"></a> Task 4.3: Verify the Running Application
