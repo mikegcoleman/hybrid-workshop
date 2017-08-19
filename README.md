@@ -244,18 +244,18 @@ Like UCP, DTR uses a single Docker container to bootstrap the install process. I
 	
 	```
 	2.3.0: Pulling from docker/dtr
-	019300c8a437: Already exists
-	102e9e155914: Pull complete
-	86573f343482: Pull complete
-	686be244eb5e: Pull complete
-	b45afdd83491: Pull complete
-	31f81f91eef0: Pull complete
-	cd151b3bbd99: Pull complete
-	980b9eb434c9: Pull complete
-	e369262ea7bc: Pull complete
-	Digest: sha256:e976ee279a00d2c8bacec0037d032702456fa46aee92c2ae07cad51abb456741
+	019300c8a437: Pull complete
+	e79b5d45af49: Pull complete
+	8a7bd66a7244: Pull complete
+	f5a08fbc29be: Pull complete
+	b39bbe9561c9: Pull complete
+	fc937f026406: Pull complete
+	e72d13961188: Pull complete
+	863b39710b20: Pull complete
+	500585597a2b: Pull complete
+	Digest: sha256:a473733de1ebadc45cae78ae44907eeef332dff6d029b1575c992118db94cd15
 	Status: Downloaded newer image for docker/dtr:2.3.0
-    ```
+	```
     
 3. Run the bootstrap container to install DTR. 
 
