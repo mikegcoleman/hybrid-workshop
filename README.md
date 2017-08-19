@@ -52,7 +52,11 @@ Your VMs are named in the following convention prefix-os-cluster number-node id.
 When this guide refers to `<linux node b>` that would be the node with the OS code `lin` and the node ID of `b` (for example `pdx-lin-01-b`>
 
 ### Virtual Machine Roles
-The cluster you will be building will be comprised of three nodes - a Linux manager, a Linux Worker and a Windows worker. We will also have a linux node and a windows node that will serve as workstations - you'll connect to these machines to do things like build and push docker images. 
+This lab uses a total of five virtual machines
+
+The Docker EE cluster you will be building will be comprised of three nodes - a Linux manager, a Linux Worker and a Windows worker. 
+
+We will also have a linux node and a windows node that will serve as workstations - you'll connect to these machines to do things like build and push docker images. 
 
 * The **A** nodes are your workstation nodes
 * The **B** nodes are your worker nodes
@@ -208,6 +212,8 @@ Let's add our 3rd node to the cluster, a Windows Server 2016 worker node. The pr
 
 1. From the Nodes screen, click the blue `Add node` button in the middle of the screen on the right hand side. 
 
+> **Note**: You may notice that there is a UI component to select `Linux` or `Windows`. The lab VMs already have the Windows components pre installed, so you do NOT need to select `Windows`. Just leave the selecton on `Linux` and move on to step 2
+
 2. Copy the text from the dark box shown on the `Add Node` screen. 
 
 	> **Note** There is an icon in the upper right corner of the box that you can click to copy the text to your clipboard
@@ -336,7 +342,10 @@ Perform the following steps on all 3 of your Linux nodes (**A**, **B**, **C**)
 		1 added, 0 removed; done.
 		Running hooks in /etc/ca-certificates/update.d...
 		done.
-3. Log into the DTR server from the command line to ensure the cert was copied correctly. 
+
+> **Note**: In some cases you may see some Perl warnings in addition to the above output, these can be safely ignored. 
+
+3. Log into the DTR server from the command line to ensure the cert was copied correctly. The username should be `docker` and the password `Docker2017`
 
 	> **Note**: Be sure to substitute the FQDN of your **B** Linux node
 	
@@ -344,11 +353,13 @@ Perform the following steps on all 3 of your Linux nodes (**A**, **B**, **C**)
 	
 	```
 	$ docker login <linux node b fqdn>
+	Username: docker
+	Password: Docker2017
 	```
 	
 	You should see a `Login succeeded` message
 	
-	> **Note**: Remember to repeat this step on all 3 Linux nodes. 
+> **Note**: Remember to repeat these steps on all 3 Linux nodes. 
 
 ![](./images/windows75.png)
 
@@ -358,20 +369,22 @@ Now we need to do something similar on the two Windows nodes. Perform the follow
 
 2. From the start menu, open a Powershell window
 
-3. From the Powershell prompt run the `cert_copy` script passing it the fqdn of your linux **B** node.
+3. Log into the DTR server from the command line to ensure the cert was copied correctly. The username should be `docker` and the password `Docker2017`
 
-	`PS C:\Users\docker> C:\copy_certs.ps1 <linux node b fqdn>`
-
-4. Log into the DTR server from the command line.
-
-	> **Note**: Be sure to substitute the FQDN of Linux node **B**
+	> **Note**: Be sure to substitute the FQDN of your **B** Linux node
+	
+	> **Note**: If you see an x509 certificate is from an unknown source error the cert didn't copy correctly, just rerun the above command. 
 	
 	```
 	$ docker login <linux node b fqdn>
+	Username: docker
+	Password: Docker2017
 	```
 	
 	You should see a `Login succeeded` message
 	
+> **Note**: Remember to repeat these steps on both Windows nodes. 
+> 
 Congratulations, your nodes are now configured to work with your DTR instance. 
 
 ## <a name="task2"></a>Task 2: Deploy a Linux Web App
