@@ -282,6 +282,7 @@ Like UCP, DTR uses a single Docker container to bootstrap the install process. I
 	--dtr-external-url <linux node b FQDN> \
 	--ucp-node <linux node b hostname> \
 	--ucp-username docker \
+	--ucp-password Docker2017
 	--ucp-url <linux node c / UCP manager URL with port #> \
 	--ucp-insecure-tls
 	```
@@ -373,6 +374,10 @@ Now we need to do something similar on the two Windows nodes. Perform the follow
 1. RDP into the Windows node
 
 2. From the start menu, open a Powershell window
+
+3. Execute the `copy_certs` script
+
+	`c:\copy_certs.ps1 <linux node b fqdn>`
 
 3. Log into the DTR server from the command line to ensure the cert was copied correctly. The username should be `docker` and the password `Docker2017`
 
@@ -530,7 +535,7 @@ Services are application building blocks (although in many cases an application 
 
 	![](./images/linux_ports.png)
 	
-11. Click 'Confirm'
+11. Click `Confirm`
 
 12. Click `Create` near the bottom right of the screen. 
 
