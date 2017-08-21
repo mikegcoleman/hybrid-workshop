@@ -1,10 +1,10 @@
-#VM Setup Instructions
+# VM Setup Instructions
 
 The workshop can be setup using the provided Terraform scripts for Azure. You will, of course, need Terraform on some workstation in order to execute the scripts.
 
 If you cannot use the Terraform, or you wish to use some other infrastructure besides Azure, you will need to build your images manually. 
 
-##Using Terraform
+## Using Terraform
 
 ### Azure Permissions
 In order to use the Terraform script you will need a service principal account with `contributor` permissions. Consult the Azure documentation on how to create a Service Principal account and assign the appropriate permissions.
@@ -74,12 +74,12 @@ The above command will print out information cards for the first 45 VMs in the `
 
 > **Note**: As of right now the list is a simple text file, you will need to add page breaks in order for it to print correctly. 
 
-##Building the base images manually
+## Building the base images manually
 If you cannot (do not want to use) the provided Terraform scripts, you will need to build you base images manually, and then use some alternative deployment methodology (the exact methodology is up to you, and out of scope for this document) 
 
 The workshop is currently designed to use three Linux nodes, and two windows nodes. With all the nodes being indentically configured as detailed below. 
 
-###Linux
+### Linux
 
 The workshop uses Ubuntu 16.04 as the base image. Additionally, you should:
 
@@ -95,7 +95,7 @@ The workshop uses Ubuntu 16.04 as the base image. Additionally, you should:
 		
 * Copy the `copy_certs.sh` script (which can be found in the `utilities` directory) into the `docker` user's home directory
 
-###Windows
+### Windows
 Use a Windows Server 2016 base image (with all the latest updates). Additionally you should:
 
 * Create an admin account with the username `docker` and password `Docker2017`
@@ -119,16 +119,14 @@ Use a Windows Server 2016 base image (with all the latest updates). Additionally
 * Copy the `copy_certs.ps1` script (which can be found in the `utilities` directory into `C:\`
 
 
-* Copy this VHD as `C:\ws2016.vhd`
+* Copy this VHD as [C:\ws2016.vhd](https://drive.google.com/uc?export=download&id=0ByQd4O58ibOES0VCbjNxTTk5LUU)
 
 * Prepull the following Docker images:
 
 	* `microsoft/windowsservercore:latest`
 	* `microsoft/iis:latest`
 	* `microsoft/nanoserver:latest`
-	* `<at sea database>`
-	* `<specific version of iis>`
-	* `UCP windows images`
+	* `sixeyed/atsea-db:mssql`
+	* `microsoft/iis:windowsservercore-10.0.14393.1358`
 
-* Run the UCP Windows Preparation Script: `<need url>`
-
+* Run the UCP [Windows preparation steps](https://docs.docker.com/datacenter/ucp/2.2/guides/admin/configure/join-windows-worker-nodes/#configure-the-windows-node)
