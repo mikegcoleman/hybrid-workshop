@@ -1,7 +1,7 @@
 # Deploying Multi-OS applications to Docker EE
-Docker EE 17.06 is the first Containers-as-a-Service platform to offer production-level support for the integrated management and security of Linux AND Windows Server Containers. 
+Docker EE 17.06 is the first Containers-as-a-Service platform to offer production-level support for the integrated management and security of Linux AND Windows Server Containers.
 
-In this lab we'll build a Docker EE cluster comprised of Windows and Linux nodes. Then we'll deploy both a Linux and Windows web app, as well as a multi-service application that includes both Windows and Linux components. 
+In this lab we'll build a Docker EE cluster comprised of Windows and Linux nodes. Then we'll deploy both a Linux and Windows web app, as well as a multi-service application that includes both Windows and Linux components.
 
 > **Difficulty**: Intermediate (assumes basic familiarity with Docker)
 
@@ -57,9 +57,9 @@ When this guide refers to `<linux node b>` that would be the node with the OS co
 ### Virtual Machine Roles
 This lab uses a total of five virtual machines
 
-The Docker EE cluster you will be building will be comprised of three nodes - a Linux manager, a Linux Worker and a Windows worker. 
+The Docker EE cluster you will be building will be comprised of three nodes - a Linux manager, a Linux Worker and a Windows worker.
 
-We will also have a linux node and a windows node that will serve as workstations - you'll connect to these machines to do things like build and push docker images. 
+We will also have a linux node and a windows node that will serve as workstations - you'll connect to these machines to do things like build and push docker images.
 
 * The **A** nodes are your workstation nodes
 * The **B** nodes are your worker nodes
@@ -96,7 +96,7 @@ We'll start by installing the UCP manager. Next we'll add a Linux worker node, f
 
 ![](./images/linux75.png)
 
-1. Either in a terminal window (Mac or Linux) or using Putty (Windows) SSH into Linux node **C** using the fully qualified domain name (fqdn). The fqdn, username and password should have been provided to you.
+1. Either in a terminal window (Mac or Linux) or using Putty (Windows) SSH into Linux node **C** using the fully qualified domain name (fqdn). The fqdn should have been provided to you. The username is `docker` and the password is `Docker2017`
 
 	`ssh docker@<linux node c fqdn>`
 
@@ -148,7 +148,7 @@ The installer will pull some images, and then ask you to supply additional subje
 
 You'll see some additional output as the UCP manager is installed
 
-	
+
 	INFO[0000] Initializing a new swarm at 10.0.2.7
 	INFO[0005] Establishing mutual Cluster Root CA with Swarm
 	INFO[0008] Installing UCP with host address 10.0.2.7 - If this is incorrect, please specify an alternative address with the '--host-address' flag
@@ -160,7 +160,7 @@ You'll see some additional output as the UCP manager is installed
 	INFO[0058] Login to UCP at https://10.0.2.7:443
 	INFO[0058] Username: docker
 	INFO[0058] Password: (your admin password)
-	
+
 The next thing we need to do is upload your Docker EE license. For this workshop we are supplying a short-term license, you can download your own 30-day trial license from the Docker Store.
 
 1. Download the [license file](https://drive.google.com/file/d/0ByQd4O58ibOEazFVRUJYNDYxMjg/view?usp=sharing) to your local laptop
@@ -186,26 +186,26 @@ Now that we have a manager node, we'll add a Linux worker node to our cluster. W
 1. From the main UCP dashboard click `Add a node` from the `Add Nodes` box near the bottom left.
 
 	![](./images/add_node.png)
-	
-2. Copy the text from the dark box shown on the `Add Node` screen. 
+
+2. Copy the text from the dark box shown on the `Add Node` screen.
 
 	> **Note** There is an icon in the upper right corner of the box that you can click to copy the text to your clipboard
 
 	![](./images/join_text.png)
-	
-3. SSH into Linux node **B**. 
+
+3. SSH into Linux node **B**.
 
 	`ssh docker@<linux node b fqdn>`
-	
+
 4. Paste the text from Step 2 at the command prompt, and press enter.
 
 	You should see the message `This node joined a swarm as a worker.` indicating you've successfully joined the node to the cluster.
-	
+
 5. Switch back to the UCP console in your web browser and click the `x` in the upper right corner to close the `Add Node` window
 
-6. You should be taken to the `Nodes` screen will will see 2 nodes listed at the bottom of your screen. Your **C** node is the manager, and the **B** node is your worker. 
+6. You should be taken to the `Nodes` screen will will see 2 nodes listed at the bottom of your screen. Your **C** node is the manager, and the **B** node is your worker.
 
-Congratulations on adding your first worker node. 
+Congratulations on adding your first worker node.
 
 In the next step we'll install and configure a Windows worker node.
 
@@ -215,27 +215,27 @@ In the next step we'll install and configure a Windows worker node.
 
 Let's add our 3rd node to the cluster, a Windows Server 2016 worker node. The process is basically exactly the same as it was for Linux
 
-1. From the Nodes screen, click the blue `Add node` button in the middle of the screen on the right hand side. 
+1. From the Nodes screen, click the blue `Add node` button in the middle of the screen on the right hand side.
 
 > **Note**: You may notice that there is a UI component to select `Linux` or `Windows`. The lab VMs already have the Windows components pre installed, so you do NOT need to select `Windows`. Just leave the selecton on `Linux` and move on to step 2
 
-2. Copy the text from the dark box shown on the `Add Node` screen. 
+2. Copy the text from the dark box shown on the `Add Node` screen.
 
 	> **Note** There is an icon in the upper right corner of the box that you can click to copy the text to your clipboard
 
 	![](./images/join_text.png)
-	
-3. Use RDP to log in to Windows node **B**. 
+
+3. Use RDP to log in to Windows node **B**.
 
 4. From the Start menu open a Powershell window
-	
+
 4. Paste the text from Step 2 at the command prompt, and press enter.
 
 	You should see the message `This node joined a swarm as a worker.` indicating you've successfully joined the node to the cluster.
-	
+
 5. Switch back to your web browser and click the `x` in the upper right corner to close the `Add Node` window
 
-6. You should be taken to the `Nodes` screen will will see 3 nodes listed at the bottom of your screen. Your Linux node **C** is the manager, and the **B** Linux and Windows nodes are your workers. 
+6. You should be taken to the `Nodes` screen will will see 3 nodes listed at the bottom of your screen. Your Linux node **C** is the manager, and the **B** Linux and Windows nodes are your workers.
 
 Congratulations on building your UCP cluster. Next up we'll install and configure DTR.
 
@@ -243,16 +243,16 @@ Congratulations on building your UCP cluster. Next up we'll install and configur
 
 ![](./images/linux75.png)
 
-Like UCP, DTR uses a single Docker container to bootstrap the install process. In the first step we'll kick off that container to install DTR, and then we'll create two repositories that we'll use later for our Tweet apps we're going to deploy. 
+Like UCP, DTR uses a single Docker container to bootstrap the install process. In the first step we'll kick off that container to install DTR, and then we'll create two repositories that we'll use later for our Tweet apps we're going to deploy.
 
 1. Switch back to (or reinitiate) your SSH session in to Linux node **C**
 
 2. Pull the latest version of DTR
 
 	`$ docker pull docker/dtr:2.3.0`
-	
+
 	You should see output similar to this:
-	
+
 	```
 	2.3.0: Pulling from docker/dtr
 	019300c8a437: Pull complete
@@ -267,30 +267,30 @@ Like UCP, DTR uses a single Docker container to bootstrap the install process. I
 	Digest: sha256:a473733de1ebadc45cae78ae44907eeef332dff6d029b1575c992118db94cd15
 	Status: Downloaded newer image for docker/dtr:2.3.0
 	```
-    
-3. Run the bootstrap container to install DTR. 
+
+3. Run the bootstrap container to install DTR.
 
 	You will need to supply three inputs
-	
+
 	* **--dtr-external URL**: The FQDN of Linux Node **B**
 	* **--ucp-node**: The hostname of Linux Node **B** (This is the first part of the FQDN. For example: pdx-lin-01-b)
 	* **--ucp-url**: The URL of the UCP server (Linux node **C**) including the port in the form of `https://<linux c node fqdn>:443` (i.e. https://pdx-lin-01-c.westus2.cloudapp.azure.com:443)
 
-	
+
    ```
 	$ docker run -it --rm docker/dtr install \
 	--dtr-external-url <linux node b FQDN> \
 	--ucp-node <linux node b hostname> \
 	--ucp-username docker \
-	--ucp-password Docker2017
+	--ucp-password Docker2017 \
 	--ucp-url <linux node c / UCP manager URL with port #> \
 	--ucp-insecure-tls
 	```
 
-4. Enter `Docker2017` as the password when prompted. 
-	
+4. Enter `Docker2017` as the password when prompted.
+
 	You will see a lot of output scroll by while DTR installs finishing with:
-	
+
 	```
 	<output deleted>
 	INFO[0160] Successfully registered dtr with UCP
@@ -301,13 +301,13 @@ Like UCP, DTR uses a single Docker container to bootstrap the install process. I
 	INFO[0162] You can use flag '--existing-replica-id 8ec3809e352e' when joining other replicas to your Docker Trusted Registry Cluster
 	INFO[0185] finished reading output
 	```
-5. Point your web browser to `https://<linux b fqdn>` and log in with the username `docker` and the password `Docker2017`. 
+5. Point your web browser to `https://<linux b fqdn>` and log in with the username `docker` and the password `Docker2017`.
 
 	> **Note**: You need to use `https:` NOT `http`
-	
+
 	> **Note**: Because UCP uses self-signed SSL certs, your web browser may warn you that your connection is not secure. You will need to click through that warning. An example from Chrome is shown below.
-	
-Now that DTR is installed, let's go ahead and create a couple of repositories to hold our tweet app images. Repositories are how images are organized within a DTR server. Each image gets pushed to its own repository. Multiple images can be stored within a repository by supplying a different tag to each version. 
+
+Now that DTR is installed, let's go ahead and create a couple of repositories to hold our tweet app images. Repositories are how images are organized within a DTR server. Each image gets pushed to its own repository. Multiple images can be stored within a repository by supplying a different tag to each version.
 
 2. From the left hand menu click `Repositories`
 
@@ -317,15 +317,15 @@ Now that DTR is installed, let's go ahead and create a couple of repositories to
 
 Let's repeat this process to create a repository for our Windows tweet app.
 
-3. Click the green `New repository` button on the right hand side of the screen. This brings up the new repository dialogue. 
+3. Click the green `New repository` button on the right hand side of the screen. This brings up the new repository dialogue.
 
 4. Under `REPOSITORY NAME` type `windows_tweet_app` and click `Save`
 
-Congratulations you've installed Docker Trusted Registry, and have created two new repositories. 
+Congratulations you've installed Docker Trusted Registry, and have created two new repositories.
 
 ### <a name="task1.5"></a>Task 1.5: Install Self Signed Certs on All Nodes
 
-Docker uses TLS to ensure the identity of the Docker Trusted Registry. In a production environment you would use certs that come from a trusted certificate authority (CA). However, by default when you install UCP and DTR they use self-signed certs. These self-signed certs are not automatically trusted by the Docker engine. In order for them to be trusted, we need to copy down the root CA cert from the DTR server onto each node in the cluster. There is a script on each of your nodes that will do this for you 
+Docker uses TLS to ensure the identity of the Docker Trusted Registry. In a production environment you would use certs that come from a trusted certificate authority (CA). However, by default when you install UCP and DTR they use self-signed certs. These self-signed certs are not automatically trusted by the Docker engine. In order for them to be trusted, we need to copy down the root CA cert from the DTR server onto each node in the cluster. There is a script on each of your nodes that will do this for you
 
 > **Note**: This step is only necessary in POC environments where trusted 3rd party certs are not used
 
@@ -335,13 +335,13 @@ Perform the following steps on all 3 of your Linux nodes (**A**, **B**, **C**)
 
 1. SSH into the Linux node
 
-2. At the command prompt run the `copy_certs` script passing it the fqdn of your linux **B** node. 
+2. At the command prompt run the `copy_certs` script passing it the fqdn of your linux **B** node.
 
 	`$ ./copy_certs.sh <linux node b fqdn>`
-	
+
 	You should see the following output
-	
-	
+
+
 		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 		100  1988  100  1988    0     0   7216      0 --:--:-- --:--:-- --:--:--  7229
 		Updating certificates in /etc/ssl/certs...
@@ -349,27 +349,27 @@ Perform the following steps on all 3 of your Linux nodes (**A**, **B**, **C**)
 		Running hooks in /etc/ca-certificates/update.d...
 		done.
 
-> **Note**: In some cases you may see some Perl warnings in addition to the above output, these can be safely ignored. 
+> **Note**: In some cases you may see some Perl warnings in addition to the above output, these can be safely ignored.
 
 3. Log into the DTR server from the command line to ensure the cert was copied correctly. The username should be `docker` and the password `Docker2017`
 
 	> **Note**: Be sure to substitute the FQDN of your **B** Linux node
-	
-	> **Note**: If you see an x509 certificate is from an unknown source error the cert didn't copy correctly, just rerun the above command. 
-	
+
+	> **Note**: If you see an x509 certificate is from an unknown source error the cert didn't copy correctly, just rerun the above command.
+
 	```
 	$ docker login <linux node b fqdn>
 	Username: docker
 	Password: Docker2017
 	```
-	
+
 	You should see a `Login succeeded` message
-	
-> **Note**: Remember to repeat these steps on all 3 Linux nodes. 
+
+> **Note**: Remember to repeat these steps on all 3 Linux nodes.
 
 ![](./images/windows75.png)
 
-Now we need to do something similar on the two Windows nodes. Perform the following steps on each of the two Windows nodes. 
+Now we need to do something similar on the two Windows nodes. Perform the following steps on each of the two Windows nodes.
 
 1. RDP into the Windows node
 
@@ -382,20 +382,20 @@ Now we need to do something similar on the two Windows nodes. Perform the follow
 3. Log into the DTR server from the command line to ensure the cert was copied correctly. The username should be `docker` and the password `Docker2017`
 
 	> **Note**: Be sure to substitute the FQDN of your **B** Linux node
-	
-	> **Note**: If you see an x509 certificate is from an unknown source error the cert didn't copy correctly, just rerun the above command. 
-	
+
+	> **Note**: If you see an x509 certificate is from an unknown source error the cert didn't copy correctly, just rerun the above command.
+
 	```
 	$ docker login <linux node b fqdn>
 	Username: docker
 	Password: Docker2017
 	```
-	
+
 	You should see a `Login succeeded` message
-	
-> **Note**: Remember to repeat these steps on both Windows nodes. 
-> 
-Congratulations, your nodes are now configured to work with your DTR instance. 
+
+> **Note**: Remember to repeat these steps on both Windows nodes.
+>
+Congratulations, your nodes are now configured to work with your DTR instance.
 
 ## <a name="task2"></a>Task 2: Deploy a Linux Web App
 
@@ -418,9 +418,9 @@ Let's start on the Linux node.
 	```
 	$ git clone https://github.com/mikegcoleman/hybrid-workshop.git
 	```
-	
+
 	You should see something like this as the output:
-	
+
 	```
 	Cloning into 'hybrid-workshop'...
 	remote: Counting objects: 13, done.
@@ -443,7 +443,7 @@ Let's start on the Linux node.
 2. Use `docker build` to build your Linux tweet web app Docker image.
 
 	`$ docker build -t <linux node b fqdn>/docker/linux_tweet_app .`
-	
+
 	The `-t` tells Docker that you're going to store this image in the `docker` repo on your Docker Trusted Registry node
 
 	> **Note**: Feel free to examine the Dockerfile in this directory if you'd like to see how the image is being built.
@@ -477,14 +477,14 @@ Let's start on the Linux node.
 
 4. Use `docker push` to upload your image up to Docker Trusted Registry.
 
-	> **Note**: You should still be logged into DTR from the previous steps, but if not you will need to log in again. 
+	> **Note**: You should still be logged into DTR from the previous steps, but if not you will need to log in again.
 
 	```
 	$ docker push <linux node b fqdn>/docker/linux_tweet_app
 	```
-	
+
 	The output should be similar to the following:
-	
+
 	```
 	The push refers to a repository [new-lin-01-b.westus2.cloudapp.azure.com/docker/linux_tweet_app]
 	feecabd76a78: Pushed
@@ -494,10 +494,10 @@ Let's start on the Linux node.
 	eb78099fbf7f: Pushed
 	latest: digest: sha256:9a376fd268d24007dd35bedc709b688f373f4e07af8b44dba5f1f009a7d70067 size: 1363
 	```
-	
+
 4. In your web browser head back to your DTR server and click `View Details` next to your `linux_tweet_app` repo to see the details of the repo.
 
-5. Click on `Images` from the horizontal menu. Notice that your newly pushed image is now on your DTR. 
+5. Click on `Images` from the horizontal menu. Notice that your newly pushed image is now on your DTR.
 
 ### <a name="task2.3"></a> Task 2.3: Deploy the Web App using UCP
 
@@ -514,13 +514,13 @@ Services are application building blocks (although in many cases an application 
 4. Enter `linux_tweet_app` for the name.
 
 4. Under `Image` enter the path to your image which should be `<linux node b fdqn/docker/linux_tweet_app`
-	
+
 5. From the left hand menu click `Scheduling`
 
-6. A few lines down the screen click `Add Constraint+`. 
+6. A few lines down the screen click `Add Constraint+`.
 
-	Constraints are used to tell UCP where to run workloads. They are based on labels - in this specific case we're using a built in label that tells us what OS a given node is running (`node.platform.os`). Since this is a Linux-based container we need to make sure it ends up on a Linux node. 
-	
+	Constraints are used to tell UCP where to run workloads. They are based on labels - in this specific case we're using a built in label that tells us what OS a given node is running (`node.platform.os`). Since this is a Linux-based container we need to make sure it ends up on a Linux node.
+
 7. Enter `node.platform.os == Linux` into the text field
 
 	![](./images/linux_constraint.png)
@@ -530,16 +530,16 @@ Services are application building blocks (although in many cases an application 
 9. Click `Publish Port+`
 
 	We need to open a port for our web server. Since port 80 is already used by UCP on one node, and DTR on the other, we'll need to pick an alternate port. We'll go with 8088.
-	
+
 10. Fill out the port fields as shown below
 
 	![](./images/linux_ports.png)
-	
+
 11. Click `Confirm`
 
-12. Click `Create` near the bottom right of the screen. 
+12. Click `Create` near the bottom right of the screen.
 
-After a few seconds you should see a green dot next to your service name. Once you see you green dot you can  point your web browser to `http://<linux node c fqdn>:8088` to see your running website. 
+After a few seconds you should see a green dot next to your service name. Once you see you green dot you can  point your web browser to `http://<linux node c fqdn>:8088` to see your running website.
 
 > **Note**: You want to go to `http://` not `https://`
 
@@ -600,7 +600,7 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 
 	```
 	PS C:\Users\docker\scm\hybrid-workshop\windows_tweet_app\docker build -t <linux node b fqdn>/docker/windows_tweet_app .
-	
+
 	Sending build context to Docker daemon  6.144kB
 	Step 1/10 : FROM microsoft/windowsservercore
 	 ---> 590c0c2590e4
@@ -649,7 +649,7 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It's going to be almost identical to how did the Linux version with a couple of small exceptions:
 
 * We will use a constraint to put the workload on a Windows node instead of Linux
-* Windows does not currently support ingress load balancing, so we'll exposer the ports in `host` mode using `dnsrr` 
+* Windows does not currently support ingress load balancing, so we'll exposer the ports in `host` mode using `dnsrr`
 
 1. In your web browser navigate to your UCP server (`https://<linux node c fqdn>`)
 
@@ -660,32 +660,32 @@ Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It
 4. Enter `windows_tweet_app` for the name.
 
 4. Under `Image` enter the path to your image which should be `<linux node b fdqn/docker/windows_tweet_app`
-	
+
 5. From the left hand menu click `Scheduling`
 
-6. A few lines down the screen click `Add Constraint+`. 
+6. A few lines down the screen click `Add Constraint+`.
 
-	Constraints are used to tell UCP where to run workloads. They are based on labels - in this specific case we're using a built in label that tells us what OS a given node is running (`node.platform.os`). Since this is a Linux-based container we need to make sure it ends up on a Linux node. 
-	
+	Constraints are used to tell UCP where to run workloads. They are based on labels - in this specific case we're using a built in label that tells us what OS a given node is running (`node.platform.os`). Since this is a Linux-based container we need to make sure it ends up on a Linux node.
+
 7. Enter `node.platform.os == windows` into the text field
 
 8. From the left hand menu click `Network`
 
-8. Set the `ENDPOINT SPEC` to `DNS Round Robin`. This tells the service to load balance using DNS. The alternative is VIP, which uses IPVS. 
+8. Set the `ENDPOINT SPEC` to `DNS Round Robin`. This tells the service to load balance using DNS. The alternative is VIP, which uses IPVS.
 
 9. Click `Publish Port+`
 
-	We need to open a port for our web server. This app runs on port 80 which is used by DTR so let's use 8082. 
-		
+	We need to open a port for our web server. This app runs on port 80 which is used by DTR so let's use 8082.
+
 10. Fill out the port fields as shown below. **Be sure to set the `Publish Mode` to  `Host`**
 
 	![](./images/windows_ports.png)
-	
+
 11. Click 'Confirm'
 
-12. Click `Create` near the bottom right of the screen. 
+12. Click `Create` near the bottom right of the screen.
 
-After a few seconds you should see a green dot next to your service name. Once you see you green dot you can  point your web browser to `http://<windows node b fqdn>:8082` to see your running website. 
+After a few seconds you should see a green dot next to your service name. Once you see you green dot you can  point your web browser to `http://<windows node b fqdn>:8082` to see your running website.
 
 > **Note**: You want to go to your Windows node b, and use `http://` not `https://`
 
@@ -757,28 +757,28 @@ You may have used Docker Compose before to deploy multi-service applications, bu
 
 8.  Click `Create`
 
-	You will see some output to show the progress of your deployment, and then a banner will pop up at the bottom indicating your deployment was successful. 
+	You will see some output to show the progress of your deployment, and then a banner will pop up at the bottom indicating your deployment was successful.
 
 9. Click `Done`
 
-The UI shows your stack (`atsea`) and that it's comprised of 2 services and 1 network. 
+The UI shows your stack (`atsea`) and that it's comprised of 2 services and 1 network.
 
 1. Click on the `atsea` stack in the list
 
 2. From the right side of the screen choose `Services` under `Inspect Resource`
 
-	![](./images/inspect_resoource.png) 
-	
-	Here you can see your two services running. It may take a few minutes for the databased service to come up (the dot to turn green). Once it does move on to the next section. 
+	![](./images/inspect_resoource.png)
+
+	Here you can see your two services running. It may take a few minutes for the databased service to come up (the dot to turn green). Once it does move on to the next section.
 
 
 ### <a name="task4.3"></a> Task 4.3: Verify the Running Application
 
-1. To see our running web site (an art store) visit `http://<linux node c fqdn>:8080>` 
+1. To see our running web site (an art store) visit `http://<linux node c fqdn>:8080>`
 
 	> **Note**: You want to go to `http://` not `https://`
-	
-	The thumbnails you see displayed are actually pulled from the SQL database. This is how you know that the connection is working between the database and web front end. 
+
+	The thumbnails you see displayed are actually pulled from the SQL database. This is how you know that the connection is working between the database and web front end.
 
 
 This concludes our workshop, thanks for attending.
