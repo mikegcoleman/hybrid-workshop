@@ -287,8 +287,6 @@ Like UCP, DTR uses a single Docker container to bootstrap the install process. I
 	--ucp-insecure-tls
 	```
 
-4. Enter `Docker2017` as the password when prompted.
-
 	You will see a lot of output scroll by while DTR installs finishing with:
 
 	```
