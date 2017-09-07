@@ -272,7 +272,7 @@ Like UCP, DTR uses a single Docker container to bootstrap the install process. I
 
 	You will need to supply three inputs
 
-	* **--dtr-external URL**: The FQDN of Linux Node **B**
+	* **--dtr-external URL**: The FQDN of Linux Node **B** (i.e.pdx-lin-01-b.westus2.cloudapp.azure.com)
 	* **--ucp-node**: The hostname of Linux Node **B** (This is the first part of the FQDN. For example: pdx-lin-01-b)
 	* **--ucp-url**: The URL of the UCP server (Linux node **C**) including the port in the form of `https://<linux c node fqdn>:443` (i.e. https://pdx-lin-01-c.westus2.cloudapp.azure.com:443)
 
