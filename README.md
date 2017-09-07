@@ -173,7 +173,7 @@ The next thing we need to do is upload your Docker EE license. For this workshop
 
 ![](./images/ssl_error.png)
 
-2. Log in to UCP with the username `docker` and the password `Docke2017`
+2. Log in to UCP with the username `docker` and the password `Docker2017`
 
 3. Click `Upload License`, navigate to your license location, and double-click the license file
 
