@@ -28,7 +28,7 @@ do
     publicIP_info=$(az network public-ip show -g $rg -n $publicip --query "{DNS:dnsSettings.fqdn, IP:ipAddress}"  -o tsv)
     privateIP=$(az network nic show -g $rg -n $nic --query "ipConfigurations[0].privateIpAddress" -o tsv)
     set -- $publicIP_info
-    printf '%s (%s)\t\t%s\t\t%s\n' $1 $role $2 $privateIP
+    printf '%s\t(%s)\t\t%s\t\t%s\n' $1 $role $2 $privateIP
   done
 
   printf "\nWindows VMs\n"
@@ -46,7 +46,9 @@ do
     publicIP_info=$(az network public-ip show -g $rg -n $publicip --query "{DNS:dnsSettings.fqdn, IP:ipAddress}"  -o tsv)
     privateIP=$(az network nic show -g $rg -n $nic --query "ipConfigurations[0].privateIpAddress" -o tsv)
     set -- $publicIP_info
-    printf '%s (%s)\t\t%s\t\t%s\n' $1 $role $2 $privateIP
+    printf '%s\t(%s)\t\t%s\t\t%s\n' $1 $role $2 $privateIP
   done
+  printf "\nWorkshop Materials: https://github.com/mikegcoleman/hybrid-workshop\n"
+  printf "Username / Password: docker / Docker2017\n\n"
   printf "\n--------------------------------------------------------------------------------------------------\n\n"
 done
