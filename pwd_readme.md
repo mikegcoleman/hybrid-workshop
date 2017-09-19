@@ -297,7 +297,7 @@ After a few seconds you should see a green dot next to your service name. Once y
 
 > **Note**: You want to go to `http://` not `https://`
 
-###**Extra Credit**: Ingress Load Balancing
+###Extra Credit: Ingress Load Balancing
 
 1. In UCP click on `Services` in the left hand menu. 
 
