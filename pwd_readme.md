@@ -1,21 +1,21 @@
-# Deploying Multi-OS applications to Docker EE
+# Deploying Multi-OS applications with Docker EE
+
+## (Play With Docker Version)
+
 Docker EE 17.06 is the first Containers-as-a-Service platform to offer production-level support for the integrated management and security of Linux AND Windows Server Containers.
 
-In this lab we'll build a Docker EE cluster comprised of Windows and Linux nodes. Then we'll deploy both a Linux and Windows web app, as well as a multi-service application that includes both Windows and Linux components.
+In this lab we'll use a Docker EE cluster comprised of Windows and Linux nodes. We'll deploy both a Linux and Windows web app, as well as a multi-service application that includes both Windows and Linux components. We will then look at scaling up your web app, as well how Docker EE handles system interruptions and upgrades. 
 
 > **Difficulty**: Intermediate (assumes basic familiarity with Docker)
 
-> **Time**: Approximately 60 minutes
+> **Time**: Approximately 75 minutes
 
 > **Tasks**:
 >
-> * [Prerequisites](#prerequisites)
-> * [Task 1: Build a Docker EE Cluster](#task1)
->   * [Task 1.1: Install the UCP manager](#task1.1)
->   * [Task 1.2: Install a Linux worker node](#task1.2)
->   * [Task 1.3: Install a Windows worker node](#task1.3)
->   * [Task 1.4: Install DTR and Create Two Repositories](#task1.4)
->   * [Task 1.5: Install Self Signed Certs on All Nodes](#task1.5)
+> * [Task 1: Configure the Docker EE Cluster](#task1)
+>   * [Task 1.1: Accessing PWD](#task 1.1)
+>   * [Task 1.2: Install a Windows worker node](#task1.2)
+>   * [Task 1.3: Create Two Repositories](#task1.3)
 > * [Task 2: Deploy a Linux Web App](#task2)
 >   * [Task 2.1: Clone the Demo Repo](#task2.1)
 >   * [Task 2.2: Build and Push the Linux Web App Image](#task2.2)
@@ -29,195 +29,68 @@ In this lab we'll build a Docker EE cluster comprised of Windows and Linux nodes
 >   * [Task 4.2: Deploy the Application](#task4.2)
 >   * [Task 4.3: Verify the Running Application](#task4.3)
 
+## Understanding the Play With Docker Interface
+
+![](./images/pwd_screen.png)
+
+There are three main components to the Play With Docker (PWD) interface
+
+### 1. Console Access
+Play with Docker provides access to the 3 Docker EE hosts in your Cluster. These machines are:
+
+* A Linux-based Docker EE 17.06 Manager node
+* A Linux-based Docker EE 17.06 Worker node
+* A Windows Server 2016-based Docker EE 17.06 Worker Node
+
+By clicking on a name on the left, the console window will be connected to that node
+
+### 2. Access to your Universal Control Plane (UCP) and Docker Trusted Registry (DTR) servers
+
+Additionally, the PWD screen provides you one-click access to the Universal Control Plane (UCP)
+web-based management interface as well as the Docker Trusted Registry (DTR) webp-based management interface. Click on either the `UCP` or `DTR` button will bring up the respective server web interface in a new tab. 
+
+### 3. Session Information
+
+Throughout the lab you will be asked to provide either hosntnames or login credentials that are unique to your environment. These are displayed for you at the top of the screen. 
+
 ## Document conventions
 
 - When you encounter a phrase in between `<` and `>`  you are meant to substitute in a different value.
 
-	For instance if you see `<linux vm dns name>` you would actually type something like `pdx-lin-01.uswest.cloudapp.azure.com`
+	For instance if you see `<dtr domain>` you would actually type something like `pdx-lin-01.uswest.cloudapp.azure.com`
 
-- When you see the Linux penguin all the following instructions should be completed in one of your Linux VMs
+- When you see the Linux penguin all the following instructions should be completed in your Linux console
 
 	![](./images/linux75.png)
 
-- When you see the Windows flag all the subsequent instructions should be completed in one of your Windows VMs.
+- When you see the Windows flag all the subsequent instructions should be completed in your Windows cosnsole.
 
 	![](./images/windows75.png)
 
+## <a name="task1"></a>Task 1: Configure the Docker EE Cluster
 
-### Virtual Machine Naming Conventions
-Your VMs are named in the following convention prefix-os-cluster number-node id.westus2.cloudapp.azure.com
+The Play with Docker (PWD) environment is almost completely setup, but before we can begin the labs we need to do two more steps. First we'll add a Windows node to the cluster, and then we'll crea
 
-* **Prefix** is a unique prefix for this workshop
-* **OS** is either lin for Linux or win for Windows
-* **Cluster** number is a two digit number unique to your VMs in this workshop
-* **Node ID** is a letter that identifies that node in your cluster
+### <a name="task 1.1"></a>Task 1.1: Accessing PWD
 
-When this guide refers to `<linux node b>` that would be the node with the OS code `lin` and the node ID of `b` (for example `pdx-lin-01-b`>
+1. Navigate in your web browswer to [http://ee.microsoft.play-with-docker.com](http://ee.microsoft.play-with-docker.com)
 
-### Virtual Machine Roles
-This lab uses a total of five virtual machines
+2. At the login in screen provide your email and click `Access`
 
-The Docker EE cluster you will be building will be comprised of three nodes - a Linux manager, a Linux Worker and a Windows worker.
+	It will take about 5 minutes to provision out your PWD environment. After this step completes, you'll be ready to move on to step 1.2: Installing a Windows worker node
 
-We will also have a linux node and a windows node that will serve as workstations - you'll connect to these machines to do things like build and push docker images.
-
-* The **A** nodes are your workstation nodes
-* The **B** nodes are your worker nodes
-* The **C** node is you manager node
-
-![](./images/vm_roles.png)
-
-## <a name="prerequisites"></a>Prerequisites
-
-You will be provided a set of five virtual machines (Two Windows and three Linux), which are already configured with Docker and some base images. You do not need Docker running on your laptop, but you will need a Remote Desktop client to connect to the Windows VM, and an SSH client to connect into the Linux one.
-### 1. RDP Client
-
-- Windows - use the built-in Remote Desktop Connection app.
-- Mac - install [Microsoft Remote Desktop](https://itunes.apple.com/us/app/microsoft-remote-desktop/id715768417?mt=12) from the app store.
-- Linux - install [Remmina](http://www.remmina.org/wp/), or any RDP client you prefer.
-
-### 2. SSH Client
-
-- Windows - [Download Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)
-- Linux - Use the built in SSH client
-- Mac - Use the built in SSH client
-
-> **Note**: When you connect to the Windows VM, if you are prompted to run Windows Update, you should cancel out. The labs have been tested with the existing VM state and any changes may cause problems.
-
-## <a name="task1"></a>Task 1: Build a Docker EE Cluster
-
-In this first step we're going to install Docker Universal Control Plane (UCP) and Docker Trusted Registry. UCP is a web-based control plane for Docker containers that can deploy and manage Docker-based applications across Windows and Linux nodes. Docker Trusted Registry is a private registry server for story your Docker images.
-
-We'll start by installing the UCP manager. Next we'll add a Linux worker node, followed by installing Docker Trusted Registry. Then we'll add a Windows worker node, and finally we'll add our self-signed certs to each of the nodes to ensure they can communicate securely with DTR.
-
-> **Note**: In the current version of UCP manager nodes must be Linux. Worker nodes can be Windows or Linux
-
-### <a name="task1.1"></a>Task 1.1: Install the UCP manager
-
-![](./images/linux75.png)
-
-1. Either in a terminal window (Mac or Linux) or using Putty (Windows) SSH into Linux node **C** using the fully qualified domain name (fqdn). The fqdn should have been provided to you. The username is `docker` and the password is `Docker2017`
-
-	`ssh docker@<linux node c fqdn>`
-
-Start the UCP installation on the current node, and make it your UCP manager.
-
-1.	Pull the latest version of UCP by issuing the following command:
-
-	```
-	$ docker image pull docker/ucp:2.2.0
-	```
-
-	You should see output similar to below
-
-  	```
-	2.2.0: Pulling from docker/ucp
-	88286f41530e: Pull complete
-	5ee9b2a2067a: Pull complete
-	8f1603d2f00b: Pull complete
-	Digest: sha256:a41a08269b39377787203517c989a0001d965bb457b45879ab3a7c1e244c9599
-	Status: Downloaded newer image for docker/ucp:2.2.0
-	```
-
-2.	Install the UCP manager by issuing the following command.
-
-	> **Note**: Be sure to substitute the **Private IP Address** of Linux Node **C** for the `--host-address`
-
-	```
-	$ docker container run --rm -it --name ucp \
-	-v /var/run/docker.sock:/var/run/docker.sock \
-	docker/ucp:2.2.0 install \
-	--admin-username docker \
-	--admin-password Docker2017 \
-	--host-address <linux node c private IP address> \
-	--interactive
-	```
-
-The installer will pull some images, and then ask you to supply additional subject alternative names (SANs)
-
-4. When prompted for `Additional aliases` you need to supply BOTH the **PUBLIC IP** and **Fully Qualified Domain Name (FQDN)** of Linux Node **C** separated by spaces
-
-	> **Note**: THIS 	STEP IS VERY IMPORTANT PLEASE FOLLOW THESE DIRECTIONS CAREFULLY
-
-	As an example:
-
-	```
-	You may enter additional aliases (SANs) now or press enter to proceed with the above list.
-  	Additional aliases: 52.183.42.41 pdx-lin-01-c.westus2.cloudapp.azure.com
-  	```
-
-You'll see some additional output as the UCP manager is installed
-
-
-	INFO[0000] Initializing a new swarm at 10.0.2.7
-	INFO[0005] Establishing mutual Cluster Root CA with Swarm
-	INFO[0008] Installing UCP with host address 10.0.2.7 - If this is incorrect, please specify an alternative address with the '--host-address' flag
-	INFO[0008] Generating UCP Client Root CA
-	INFO[0010] Deploying UCP Service
-	INFO[0058] Installation completed on new-lin-01-c (node iiuinrv3osaoon2meboxojh3x)
-	INFO[0058] UCP Instance ID: 6jw827dm4h13kd4nmhc7o10n6
-	INFO[0058] UCP Server SSL: SHA-256 Fingerprint=59:8C:C8:AB:37:6E:EF:6C:FB:AA:5E:C5:48:00:27:16:E3:0D:EA:B0:2F:F1:A2:4B:8C:F3:0E:1A:5B:AC:83:F4
-	INFO[0058] Login to UCP at https://10.0.2.7:443
-	INFO[0058] Username: docker
-	INFO[0058] Password: (your admin password)
-
-The next thing we need to do is upload your Docker EE license. For this workshop we are supplying a short-term license, you can download your own 30-day trial license from the Docker Store.
-
-1. Download the [license file](https://drive.google.com/file/d/0ByQd4O58ibOEazFVRUJYNDYxMjg/view?usp=sharing) to your local laptop
-
-1. Navigate to the UCP console by pointing your browser at `https://<linux node c public ip address>`
-
-> **Note**: You need to use `https:` NOT `http`
-
-> **Note**: Because UCP uses self-signed SSL certs, your web browser may warn you that your connection is not secure. You will need to click through that warning. An example from Chrome is shown below.
-
-![](./images/ssl_error.png)
-
-2. Log in to UCP with the username `docker` and the password `Docker2017`
-
-3. Click `Upload License`, navigate to your license location, and double-click the license file
-
-Congratulations, you have installed the UCP manager node.
-
-### <a name="task1.2"></a>Task 1.2: Install a Linux worker node
-
-Now that we have a manager node, we'll add a Linux worker node to our cluster. Worker nodes are the servers that actually run our Docker-based applications.
-
-1. From the main UCP dashboard click `Add a node` from the `Add Nodes` box near the bottom left.
-
-	![](./images/add_node.png)
-
-2. Copy the text from the dark box shown on the `Add Node` screen.
-
-	> **Note** There is an icon in the upper right corner of the box that you can click to copy the text to your clipboard
-
-	![](./images/join_text.png)
-
-3. SSH into Linux node **B**.
-
-	`ssh docker@<linux node b fqdn>`
-
-4. Paste the text from Step 2 at the command prompt, and press enter.
-
-	You should see the message `This node joined a swarm as a worker.` indicating you've successfully joined the node to the cluster.
-
-5. Switch back to the UCP console in your web browser and click the `x` in the upper right corner to close the `Add Node` window
-
-6. You should be taken to the `Nodes` screen will will see 2 nodes listed at the bottom of your screen. Your **C** node is the manager, and the **B** node is your worker.
-
-Congratulations on adding your first worker node.
-
-In the next step we'll install and configure a Windows worker node.
-
-### <a name="task1.3"></a>Task 1.3: Install a Windows worker node
+### <a name="task1.2"></a>Task 1.2: Install a Windows worker node
 
 ![](./images/windows75.png)
 
-Let's add our 3rd node to the cluster, a Windows Server 2016 worker node. The process is basically exactly the same as it was for Linux
+Let's start by adding our 3rd node to the cluster, a Windows Server 2016 worker node. 
+
+1. From the main PWD screen click the `UCP` button on the left side of the screen
+
 
 1. From the Nodes screen, click the blue `Add node` button in the middle of the screen on the right hand side.
 
-> **Note**: You may notice that there is a UI component to select `Linux` or `Windows`. The lab VMs already have the Windows components pre installed, so you do NOT need to select `Windows`. Just leave the selecton on `Linux` and move on to step 2
+> **Note**: You may notice that there is a UI component to select `Linux` or `Windows`. In a production environment where you are starting from scratch there are [a few prerequisite steps] to adding a Windows node. However, we've already done these steps in the PWD envrionemnt. So for this lab, just leave the selecton on `Linux` and move on to step 2
 
 2. Copy the text from the dark box shown on the `Add Node` screen.
 
