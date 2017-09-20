@@ -361,7 +361,7 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 
 2. Use `docker build` to build your Windows tweet web app Docker image.
 
-	`$ docker build -t <dtr host name>/<your user name>//windows_tweet_app .`
+	`$ docker build -t <dtr host name>/<your user name>/windows_tweet_app .`
 
 	> **Note**: Feel free to examine the Dockerfile in this directory if you'd like to see how the image is being built.
 
@@ -382,7 +382,7 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 	 ---> d74eead7f408
 	Removing intermediate container ab4dfee81c7e
 	Successfully built d74eead7f408
-	Successfully tagged <dtr host name>/<your user name>//windows_tweet_app:latest
+	Successfully tagged <dtr host name>/<your user name>/windows_tweet_app:latest
 	```
 	> **Note**: It will take sevearl minutes for your image to build. 
 
