@@ -280,8 +280,6 @@ Services are application building blocks (although in many cases an application 
 
 4. Under `Image` enter the path to your image which should be `<dtr host name>/<your user name>/linux_tweet_app`
 
-5. From the left hand menu click `Scheduling`
-
 8. From the left hand menu click `Network`
 
 9. Click `Publish Port+`
@@ -300,22 +298,29 @@ After a few seconds you should see a green dot next to your service name. Once y
 
 > **Note**: You want to go to `http://` not `https://`
 
-###Extra Credit: Ingress Load Balancing
+### Extra Credit: Ingress Load Balancing
 
 1. In UCP click on `Services` in the left hand menu. 
 
 2. From the List of services click on `linux_tweet_app`
 
-3. From the dropdown on the right-hand side select `Inspect` and then `Containers` Notice which host the container is running on. Is it running on the manager or the worker node?
+3. From the dropdown on the right-hand side select `Inspect Resources` and then `Containers` Notice which host the container is running on. Is it running on the manager or the worker node?
+
+	![](./images/linux_tweet_app_container.png)
 
 	If it's the worker node, how did your web browser find it when we pointed at the UCP Manager node?
 	
-4. Point your browser at `http://<DTR Host Name>:8088`. Did the site come up? In the end it doesn't matter if we try and access the service via the manager or the worker, Docker EE will route the request correctly.
+4. Point your browser at `http://<DTR Host Name>:8088`. Did the site come up? 
+	
+	In the end it doesn't matter if we try and access the service via the manager or the worker, Docker EE will route the request correctly.
 
 	> **Note**: DTR is running on the worker node, so pointing to the DTR server is the same as pointing at the worker node. 
 	
-This is an example of the built in ingress load balancer in Docker EE. Regardless of where a Linux-based service is actually running, you can access it from any Linux node in the cluster. So, if it's running on the manager in our cluster, you can still get to it by accessing the worker node. Docker EE can accept the request coming into any of the Linux nodes in the cluster, and route it to a host that's actually running a container for that service. 
+	This is an example of the built in ingress load balancer in Docker EE. Regardless of where a Linux-based service is actually running, you can access it from any Linux node in the cluster. So, if it's running on the manager in our cluster, you can still get to it by accessing the worker node. Docker EE can accept the request coming into any of the Linux nodes in the cluster, and route it to a host that's actually running a container for that service. 
+	
+5. Be sure to clear the filter in the UCP UI by clicking the `X` in the upper right corner. If you don't do this, you won't see any of the other services you deploy later in the lab
 
+	![](./images/clear_filter.png)
 
 ## <a name="task3"></a>Task 3: Deploy a Windows Web App
 
