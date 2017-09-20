@@ -525,7 +525,7 @@ The UI shows your stack (`atsea`) and that it's comprised of 2 services and 1 ne
 
 	![](./images/inspect_resoource.png)
 
-	Here you can see your two services running. It may take a few minutes for the databased service to come up (the dot to turn green). Once it does move on to the next section.
+	Here you can see your two services running. It may take a few minutes for the database service to come up (the dot to turn green). Once it does move on to the next section.
 
 
 ### <a name="task4.3"></a> Task 4.3: Verify the Running Application
