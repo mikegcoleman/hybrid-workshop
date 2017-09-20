@@ -230,9 +230,12 @@ Let's start with the Linux version.
 
 3. Log into your DTR server from the command line
 
-		$ docker login <dtr host name>
-		Login succeeded
-
+	```
+	$ docker login <dtr host name>
+	Username: <your username>
+	Password: <your password>
+	Login Succeeded
+	```
 4. Use `docker push` to upload your image up to Docker Trusted Registry.
 
 	> **Note**: You should still be logged into DTR from the previous steps, but if not you will need to log in again.
@@ -293,7 +296,7 @@ Services are application building blocks (although in many cases an application 
 
 12. Click `Create` near the bottom right of the screen.
 
-After a few seconds you should see a green dot next to your service name. Once you see you green dot you can  point your web browser to `http://<UCP Host Name>:8088` to see your running website.
+After a few seconds you should see a green dot next to your service name. Once you see you green dot you can  point your web browser to `http://<UCP Host Name>:8088` to see your running website  (it may take a minute or so after the dot turns green for the service to be fully available). 
 
 > **Note**: You want to go to `http://` not `https://`
 
@@ -320,15 +323,15 @@ Now we'll deploy the Windows version of the tweet app.
 
 ### <a name="task3.1"></a> Task 3.1: Create the dockerfile with Image2Docker
 
-There is a Windows Server 2016 VHD that contains our Windows Tweet App stored in `c:\` on your cloud-based VM. We're going to use Image2Docker to scan the VHD, and create a Dockerfile. We'll build the Dockerfile as we did in the previous step, push it to DTR, and then deploy our Windows tweet app.
+There is a Windows Server 2016 VHD that contains our Windows Tweet App stored in `c:\` on Windows host. We're going to use Image2Docker to scan the VHD, and create a Dockerfile. We'll build the Dockerfile as we did in the previous step, push it to DTR, and then deploy our Windows tweet app.
 
 ![](./images/windows75.png)
 
-1. Move back to Windows node **A**, and open a PowerShell window.
-
+1. Click the name of your Windows host in PWD to switch your web console.
+2
 2. Use Image2Docker's `ConvertTo-Dockerfile` command to create a dockerfile from the VHD.
 
-	Copy and paste the command below into your Powershell window.
+	Copy and paste the command below into your Windows console window.
 
 	```
 	ConvertTo-Dockerfile -ImagePath c:\ws2016.vhd `
@@ -337,6 +340,7 @@ There is a Windows Server 2016 VHD that contains our Windows Tweet App stored in
 	                     -Verbose
 	```
 
+	As mentioned before Image2Docker will scan the VHD, and extract out a Dockerfile based on the contents of the VHD. The list below explains the command line aruguments. 
 
 	* `ImagePath` specifies where the VHD can be found
 
@@ -353,23 +357,21 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 
 ![](./images/windows75.png)
 
-1. CD into the directory where your Image2Docker files have been placed.
+1. CD into the `c:\windowstweetapp` directory (this is where your Image2Docker files have been placed).
 
-	`PS C:\Users\docker> cd c:\windowstweetapp\`
+	`PS C:\> cd c:\windowstweetapp\`
 
 
 2. Use `docker build` to build your Windows tweet web app Docker image.
 
-	`$ docker build -t <linux node b fqdn>/docker/windows_tweet_app .`
-
-	> **Note**: Be sure to use the FQDN for Linux node **B** when you tag the image.
+	`$ docker build -t <dtr host name>/<your user name>//windows_tweet_app .`
 
 	> **Note**: Feel free to examine the Dockerfile in this directory if you'd like to see how the image is being built.
 
 	Your output should be similar to what is shown below
 
 	```
-	PS C:\Users\docker\scm\hybrid-workshop\windows_tweet_app\docker build -t <linux node b fqdn>/docker/windows_tweet_app .
+	PS C:\windowstweetapp> docker build -t <dtr host name>/<your user name>/windows_tweet_app .
 
 	Sending build context to Docker daemon  6.144kB
 	Step 1/10 : FROM microsoft/windowsservercore
@@ -383,24 +385,24 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 	 ---> d74eead7f408
 	Removing intermediate container ab4dfee81c7e
 	Successfully built d74eead7f408
-	Successfully tagged <linux node b fqdn>/docker/windows_tweet_app:latest
+	Successfully tagged <dtr host name>/<your user name>//windows_tweet_app:latest
 	```
-	> **Note**: It will take a few minutes for your image to build. If it takes more than 5 minutes move into your powershell window and press `Enter`. Sometimes the Powershell window will not update the current status of the build process.
+	> **Note**: It will take sevearl minutes for your image to build. 
 
 4. Log into Docker Trusted Registry
 
 	```
-	PS C:\Users\docker> docker login <linux node b fqdn>
-	Username: docker
-	Password: Docker2017
+	PS C:\> docker login <dtr host name>
+	Username: <your username>
+	Password: <your password>
 	Login Succeeded
 	```
 
 5. Push your new image up to Docker Trusted Registry.
 
 	```
-	PS C:\Users\docker> docker push <linux node b fqdn>/docker/windows_tweet_app
-	The push refers to a repository [<linux node b fqdn>/docker/windows_tweet_app]
+	PS C:\Users\docker> docker push <dtr hostname>/<your username>/windows_tweet_app
+	The push refers to a repository [<dtr hostname>/<your username>/windows_tweet_app]
 	5d08bc106d91: Pushed
 	74b0331584ac: Pushed
 	e95704c2f7ac: Pushed
@@ -416,12 +418,9 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 	```
 
 ### <a name="task3.3"></a> Task 3.3: Deploy the Windows Web App
-Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It's going to be almost identical to how did the Linux version with a couple of small exceptions:
+Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It's going to be almost identical to how did the Linux version with a couple of one small exceptionn: Docker EE on Windows Server 2016 does not currently support ingress load balancing, so we'll exposer the ports in `host` mode using `dnsrr`
 
-* We will use a constraint to put the workload on a Windows node instead of Linux
-* Windows does not currently support ingress load balancing, so we'll exposer the ports in `host` mode using `dnsrr`
-
-1. In your web browser navigate to your UCP server (`https://<linux node c fqdn>`)
+1. Switch back to UCP in your web browser
 
 2. In the left hand menu click `Services`
 
@@ -429,15 +428,7 @@ Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It
 
 4. Enter `windows_tweet_app` for the name.
 
-4. Under `Image` enter the path to your image which should be `<linux node b fdqn/docker/windows_tweet_app`
-
-5. From the left hand menu click `Scheduling`
-
-6. A few lines down the screen click `Add Constraint+`.
-
-	Constraints are used to tell UCP where to run workloads. They are based on labels - in this specific case we're using a built in label that tells us what OS a given node is running (`node.platform.os`). Since this is a Linux-based container we need to make sure it ends up on a Linux node.
-
-7. Enter `node.platform.os == windows` into the text field
+4. Under `Image` enter the path to your image which should be `<dtr hostname>/<your username>/windows_tweet_app`
 
 8. From the left hand menu click `Network`
 
@@ -455,9 +446,7 @@ Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It
 
 12. Click `Create` near the bottom right of the screen.
 
-After a few seconds you should see a green dot next to your service name. Once you see you green dot you can  point your web browser to `http://<windows node b fqdn>:8082` to see your running website.
-
-> **Note**: You want to go to your Windows node b, and use `http://` not `https://`
+After a few seconds you should see a green dot next to your service name. Once you see you green dot you can  point your web browser to `http://<windows host>:8082` to see your running website.
 
 ## <a name="task4"></a> Deploying a Multi-OS Application
 
@@ -544,9 +533,7 @@ The UI shows your stack (`atsea`) and that it's comprised of 2 services and 1 ne
 
 ### <a name="task4.3"></a> Task 4.3: Verify the Running Application
 
-1. To see our running web site (an art store) visit `http://<linux node c fqdn>:8080>`
-
-	> **Note**: You want to go to `http://` not `https://`
+1. To see our running web site (an art store) visit `http://<UCP host name>:8080>`
 
 	The thumbnails you see displayed are actually pulled from the SQL database. This is how you know that the connection is working between the database and web front end.
 
