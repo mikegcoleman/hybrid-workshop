@@ -5,7 +5,7 @@ In this lab we'll build a Docker EE cluster comprised of Windows and Linux nodes
 
 This lab can be run two different ways:
 
-* [**Using Virtual Machines**](https://github.com/mikegcoleman/hybrid-workshop/blob/pwd/vm_readme.md): In this case you'll be provided 3 VMs and will use SSH and RDP to access those VMs in order to complete your lab exercises. 
+* [**Using Virtual Machines**](https://github.com/mikegcoleman/hybrid-workshop/blob/pwd/vm_readme.md): In this case you'll be provided 5 VMs and will use SSH and RDP to access those VMs in order to complete your lab exercises. 
 
 	The major difference between using VMs and using Play With Docker is that in the VM-based labs you actually build the Docker EE cluster from the ground up. 
 
