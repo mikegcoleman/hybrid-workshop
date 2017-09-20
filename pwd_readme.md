@@ -334,10 +334,7 @@ There is a Windows Server 2016 VHD that contains our Windows Tweet App stored in
 	Copy and paste the command below into your Windows console window.
 
 	```
-	ConvertTo-Dockerfile -ImagePath c:\ws2016.vhd `
-	                     -Artifact IIS `
-	                     -OutputPath C:\windowstweetapp `
-	                     -Verbose
+	ConvertTo-Dockerfile -ImagePath c:\ws2016.vhd -Artifact IIS -OutputPath C:\windowstweetapp -Verbose
 	```
 
 	As mentioned before Image2Docker will scan the VHD, and extract out a Dockerfile based on the contents of the VHD. The list below explains the command line aruguments. 
