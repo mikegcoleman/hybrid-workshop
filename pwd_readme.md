@@ -13,7 +13,7 @@ In this lab we'll use a Docker EE cluster comprised of Windows and Linux nodes. 
 > **Tasks**:
 >
 > * [Task 1: Configure the Docker EE Cluster](#task1)
->   * [Task 1.1: Accessing PWD](#task 1.1)
+>   * [Task 1.1: Accessing PWD](#task1.1)
 >   * [Task 1.2: Install a Windows worker node](#task1.2)
 >   * [Task 1.3: Create Two Repositories](#task1.3)
 > * [Task 2: Deploy a Linux Web App](#task2)
@@ -51,7 +51,7 @@ web-based management interface as well as the Docker Trusted Registry (DTR) web-
 
 ### 3. Session Information
 
-Throughout the lab you will be asked to provide either hosntnames or login credentials that are unique to your environment. These are displayed for you at the top of the screen. 
+Throughout the lab you will be asked to provide either hosntnames or login credentials that are unique to your environment. These are displayed for you at the bottom of the screen. 
 
 ## Document conventions
 
@@ -73,15 +73,13 @@ The Play with Docker (PWD) environment is almost completely setup, but before we
 
 ### <a name="task 1.1"></a>Task 1.1: Accessing PWD
 
-1. Navigate in your web browswer to [http://ee.microsoft.play-with-docker.com](http://ee.microsoft.play-with-docker.com)
+1. Navigate in your web browswer to [the PWD environment sign-in page](https://goto.docker.com/2017PWDonMicrosoftAzure_MTALP.html)
 
 2. At the login in screen provide your email and click `Access`
 
 	It will take about 5 minutes to provision out your PWD environment. After this step completes, you'll be ready to move on to step 1.2: Installing a Windows worker node
 
 ### <a name="task1.2"></a>Task 1.2: Install a Windows worker node
-
-
 
 Let's start by adding our 3rd node to the cluster, a Windows Server 2016 worker node. 
 
@@ -92,9 +90,11 @@ Let's start by adding our 3rd node to the cluster, a Windows Server 2016 worker 
 	> In a production environment you would use certs from a trusted certificate authority and would not see this screen.
 	> ![](./images/ssl_error.png)
 
-2. When prompted enter your username and password (these can be found at the top of your main PWD screen). The UCP web interface should load up in your web browser. 
+2. When prompted enter your username and password (these can be found below the console window in the main PWD screen). The UCP web interface should load up in your web browser. 
 
-	> **Note**: There is a warning displayed at the top of the screen, this is an artifact of running in a lab environment. A UCP server configured for a production environment would not display this warning
+	> **Note**: Once the main UCP screen loads you'll notice there is a red warning bar displayed at the top of the UCP screen, this is an artifact of running in a lab environment. A UCP server configured for a production environment would not display this warning
+	>
+	> ![](./images/red_warning.png)
 
 
 3. From the main dashboard screen, click `Add a Node` on the bottom left of the screen
@@ -181,7 +181,7 @@ Let's start with the Linux version.
 	Checking connectivity... done.
 	```
 
-	You now have the necessary demo code on your Linux VM.
+	You now have the necessary demo code on your worker host.
 
 ### <a name="task2.2"></a> Task 2.2: Build and Push the Linux Web App Image
 
@@ -197,7 +197,7 @@ Let's start with the Linux version.
 	
 	> **Note**: Be sure to substitute your DTR Host Name and your User Name - both these are listed at the top of your PWD page.
 
-	The `-t` tells Docker that you're going to store this image in the your repo on the Docker Trusted Registry server
+	The `-t` tags the iamge with a name. In our case the name indicates which DTR server and under which user's respository the image will live. 
 
 	> **Note**: Feel free to examine the Dockerfile in this directory if you'd like to see how the image is being built.
 
@@ -237,8 +237,6 @@ Let's start with the Linux version.
 	Login Succeeded
 	```
 4. Use `docker push` to upload your image up to Docker Trusted Registry.
-
-	> **Note**: You should still be logged into DTR from the previous steps, but if not you will need to log in again.
 
 	```
 	$ docker push <dtr host name>/<your user name>/linux_tweet_app
@@ -294,7 +292,7 @@ Services are application building blocks (although in many cases an application 
 
 12. Click `Create` near the bottom right of the screen.
 
-After a few seconds you should see a green dot next to your service name. Once you see you green dot you can  point your web browser to `http://<UCP Host Name>:8088` to see your running website  (it may take a minute or so after the dot turns green for the service to be fully available). 
+After a few seconds you should see a green dot next to your service name. Once you see you green dot you can point your web browser to `http://<UCP Host Name>:8088` to see your running website  (it may take a minute or so after the dot turns green for the service to be fully available). 
 
 > **Note**: You want to go to `http://` not `https://`
 
