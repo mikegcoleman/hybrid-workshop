@@ -75,9 +75,13 @@ The Play with Docker (PWD) environment is almost completely setup, but before we
 
 1. Navigate in your web browswer to [the PWD environment sign-in page](https://goto.docker.com/2017PWDonMicrosoftAzure_MTALP.html)
 
-2. At the login in screen provide your email and click `Access`
+	> **Note**: You might want to right click the above link and open it in a new tab or window
 
-	It will take about 5 minutes to provision out your PWD environment. After this step completes, you'll be ready to move on to step 1.2: Installing a Windows worker node
+2. Fill out the form, and click `submit`. You will then be redirected to the PWD environment. 
+
+3. Click `Access`
+
+	It will take a few minutes to provision out your PWD environment. After this step completes, you'll be ready to move on to step 1.2: Install a Windows worker node
 
 ### <a name="task1.2"></a>Task 1.2: Install a Windows worker node
 
