@@ -26,8 +26,12 @@ In this lab we'll use a Docker EE cluster comprised of Windows and Linux nodes. 
 >   * [Task 3.3: Deploy the Windows Web App](#task3.3)
 > * [Task 4: Deploy a Multi-OS Application](#task4)
 >   * [Task 4.1: Examine the Docker Compose File](#task4.1)
->   * [Task 4.2: Deploy the Application](#task4.2)
+>   * [Task 4.2: Deploy the Application Stack](#task4.2)
 >   * [Task 4.3: Verify the Running Application](#task4.3)
+> * [Task 5: Application Lifecycle Management](#Task5)
+>   * [Task 5.1: Upgrading the Web Front-end](#Task5.1)
+>   * [Task 5.2: Scaling the Web Front-end](#Task 5.2)
+>   * [Task 5.3: Dealing with an Application Failure](#Task5.3)
 
 ## Understanding the Play With Docker Interface
 
@@ -105,15 +109,17 @@ Let's start by adding our 3rd node to the cluster, a Windows Server 2016 worker 
 	
 	![](./images/add_a_node.png)
 
-	> **Note**: You may notice that there is a UI component to select `Linux` or `Windows`on the `Add Node` screen. In a production environment where you are starting from scratch there are [a few prerequisite steps] to adding a Windows node. However, we've already done these steps in the PWD envrionemnt. So for this lab, just leave the selecton on `Linux` and move on to step 2
-
 4. Copy the text from the dark box shown on the `Add Node` screen.
 
 	> **Note** There is an icon in the upper right corner of the box that you can click to copy the text to your clipboard
+	> ![](./images/join_text.png)
+	
+	
+	> **Note**: You may notice that there is a UI component to select `Linux` or `Windows`on the `Add Node` screen. In a production environment where you are starting from scratch there are [a few prerequisite steps] to adding a Windows node. However, we've already done these steps in the PWD envrionemnt. So for this lab, just leave the selecton on `Linux` and move on to step 2
+	
 
-	![](./images/join_text.png)
 
-	![](./images/windows75.png)
+![](./images/windows75.png)
 
 6. Switch back to the PWD interface, and click the name of your Windows node. This will connect the web-based console to your Windows Server 2016 Docker EE host. 
 
@@ -197,9 +203,9 @@ Let's start with the Linux version.
 
 2. Use `docker build` to build your Linux tweet web app Docker image.
 
-	`$ docker build -t <dtr host name>/<your user name>/linux_tweet_app .`
+	`$ docker build -t <dtr hostname>/<your user name>/linux_tweet_app .`
 	
-	> **Note**: Be sure to substitute your DTR Host Name and your User Name - both these are listed at the top of your PWD page.
+	> **Note**: Be sure to substitute your DTR Hostname and your User Name - both these are listed at the top of your PWD page.
 
 	The `-t` tags the iamge with a name. In our case the name indicates which DTR server and under which user's respository the image will live. 
 
@@ -229,13 +235,13 @@ Let's start with the Linux version.
 	 ---> ed5f550fc339
 	Removing intermediate container 54020cdec942
 	Successfully built ed5f550fc339
-	Successfully tagged  <dtr host name>/<your user name>/linux_tweet_app:latest
+	Successfully tagged  <dtr hostname>/<your user name>/linux_tweet_app:latest
 	```
 
 3. Log into your DTR server from the command line
 
 	```
-	$ docker login <dtr host name>
+	$ docker login <dtr hostname>
 	Username: <your username>
 	Password: <your password>
 	Login Succeeded
@@ -243,13 +249,13 @@ Let's start with the Linux version.
 4. Use `docker push` to upload your image up to Docker Trusted Registry.
 
 	```
-	$ docker push <dtr host name>/<your user name>/linux_tweet_app
+	$ docker push <dtr hostname>/<your user name>/linux_tweet_app
 	```
 
 	The output should be similar to the following:
 
 	```
-	The push refers to a repository [<dtr host name>/<your user name>/linux_tweet_app]
+	The push refers to a repository [<dtr hostname>/<your user name>/linux_tweet_app]
 	feecabd76a78: Pushed
 	3c749ee6d1f5: Pushed
 	af5bd3938f60: Pushed
@@ -280,7 +286,7 @@ Services are application building blocks (although in many cases an application 
 
 4. Enter `linux_tweet_app` for the name.
 
-4. Under `Image` enter the path to your image which should be `<dtr host name>/<your user name>/linux_tweet_app`
+4. Under `Image` enter the path to your image which should be `<dtr hostname>/<your user name>/linux_tweet_app`
 
 8. From the left hand menu click `Network`
 
@@ -296,7 +302,7 @@ Services are application building blocks (although in many cases an application 
 
 12. Click `Create` near the bottom right of the screen.
 
-After a few seconds you should see a green dot next to your service name. Once you see you green dot you can point your web browser to `http://<UCP Host Name>:8088` to see your running website  (it may take a minute or so after the dot turns green for the service to be fully available). 
+After a few seconds you should see a green dot next to your service name. Once you see you green dot you can point your web browser to `http://<UCP hostname>:8088` to see your running website  (it may take a minute or so after the dot turns green for the service to be fully available). 
 
 > **Note**: You want to go to `http://` not `https://`
 
@@ -312,7 +318,7 @@ After a few seconds you should see a green dot next to your service name. Once y
 
 	If it's the worker node, how did your web browser find it when we pointed at the UCP Manager node?
 	
-4. Point your browser at `http://<DTR Host Name>:8088`. Did the site come up? 
+4. Point your browser at `http://<DTR hostname>:8088`. Did the site come up? 
 	
 	In the end it doesn't matter if we try and access the service via the manager or the worker, Docker EE will route the request correctly.
 
@@ -368,14 +374,14 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 
 2. Use `docker build` to build your Windows tweet web app Docker image.
 
-	`$ docker build -t <dtr host name>/<your user name>/windows_tweet_app .`
+	`$ docker build -t <dtr hostname>/<your user name>/windows_tweet_app .`
 
 	> **Note**: Feel free to examine the Dockerfile in this directory if you'd like to see how the image is being built.
 
 	Your output should be similar to what is shown below
 
 	```
-	PS C:\windowstweetapp> docker build -t <dtr host name>/<your user name>/windows_tweet_app .
+	PS C:\windowstweetapp> docker build -t <dtr hostname>/<your user name>/windows_tweet_app .
 
 	Sending build context to Docker daemon  6.144kB
 	Step 1/10 : FROM microsoft/windowsservercore
@@ -389,14 +395,14 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 	 ---> d74eead7f408
 	Removing intermediate container ab4dfee81c7e
 	Successfully built d74eead7f408
-	Successfully tagged <dtr host name>/<your user name>/windows_tweet_app:latest
+	Successfully tagged <dtr hostname>/<your user name>/windows_tweet_app:latest
 	```
 	> **Note**: It will take sevearl minutes for your image to build. 
 
 4. Log into Docker Trusted Registry
 
 	```
-	PS C:\> docker login <dtr host name>
+	PS C:\> docker login <dtr hostname>
 	Username: <your username>
 	Password: <your password>
 	Login Succeeded
@@ -452,7 +458,7 @@ Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It
 
 After a few seconds you should see a green dot next to your service name. Once you see you green dot you can  point your web browser to `http://<windows host>:8082` to see your running website.
 
-## <a name="task4"></a> Deploying a Multi-OS Application
+## <a name="task4"></a> Task4: Deploying a Multi-OS Application
 
 For our last exercise we'll use a docker compose file to deploy an application that uses a Java front end designed to be deployed on Linux, with a Microsoft SQL Server back end running on windows.
 
@@ -476,21 +482,14 @@ services:
      - atsea
     deploy:
       endpoint_mode: dnsrr
-      placement:
-        constraints:
-          - 'node.platform.os == windows'
 
   appserver:
-    image: sixeyed/atsea-app:mssql
+    image: mikegcoleman/atsea_appserver:1.0
     ports:
       - target: 8080
         published: 8080
     networks:
       - atsea
-    deploy:
-      placement:
-        constraints:
-          - 'node.platform.os == linux'
 
 networks:
   atsea:
@@ -500,13 +499,17 @@ There are two services. `appserver` is our web frontend written in Java, and `da
 
 One thing that is new is the creation of an overlay network (`atsea`). Overlay networks allow containers running on different hosts to communicate over a private software-defined network. In this case, the web frontend on our Linux host will use the `atsea` network to communicate with the database.
 
-You may have used Docker Compose before to deploy multi-service applications, but with swarm we use a slightly different command: `docker stack`.
+Docke EE can use 
 
-### <a name="task4.2"></a> Task 4.2: Deploy the Application
+### <a name="task4.2"></a> Taks 4.2 Deploy the Application Stack
+
+A `stack` is a group of related services that make up an application. Stacks are a newer Docker primative, and can be deployed with a Docker Compose file. 
+
+Let's Deploy an application stack using the Docker Compose file above. 
 
 1. Move to the UCP console in your web browser
 
-2. In the left hand menu click `stacks`
+2. In the left hand menu click `Stacks`
 
 3. In the upper right click `Create Stack`
 
@@ -524,7 +527,7 @@ You may have used Docker Compose before to deploy multi-service applications, bu
 
 9. Click `Done`
 
-The UI shows your stack (`atsea`) and that it's comprised of 2 services and 1 network.
+You should now be back on the Stacks screen.
 
 1. Click on the `atsea` stack in the list
 
@@ -537,9 +540,166 @@ The UI shows your stack (`atsea`) and that it's comprised of 2 services and 1 ne
 
 ### <a name="task4.3"></a> Task 4.3: Verify the Running Application
 
-1. To see our running web site (an art store) visit `http://<UCP host name>:8080>`
+1. To see our running web site (an art store) visit `http://<UCP hostname>:8080>`
 
 	The thumbnails you see displayed are actually pulled from the SQL database. This is how you know that the connection is working between the database and web front end.
 
+## <a name="task5"></a> Task 5: Application Lifecycle Management
 
-This concludes our workshop, thanks for attending.
+Now that we've deployed our application, let's take a look at some common tasks that admins need to do to keep their apps running and up-to-date. We'll start by upgrading the web front end, next we'll scale that service to meet demand, and then finally we'll see how to deal with the failur of a node in our UCP cluster. 
+
+### <a name="task5.1"></a> Task 5.1: Upgrading the Web Front-end
+
+In this section we're going to first simulate a failed upgrade attempt, and see how to deal with that. The way we upgrade a running service is to update the image that service is based on. In this case the image we're going to upgrade to is broken. So when it's deployed UCP will pause the upgrade process, from there we can roll the application back to it's previous state. 
+
+1. Move back into Universal Control Plane
+
+2. If your services are not currently displayed, click on `Services` from the left hand menu
+
+3. Click on the `atsea_appserver` service from the list
+
+4. On the left, under 'Configure` select `Details`
+
+	![](./images/service_details.png)
+	
+5. Under image, change the value to `mikegcoleman/atsea_appserver:2.0`
+
+6. Click `Update` in the bottom right corner
+
+7. Click on the `atsea_appserver` service from the list
+
+8. The service indicator will turn from green to red, and if you look at the details on the right you'll see the `Update Status` go from `Updating` to `Paused`
+
+	This is because the container that backs up the service failed to start up. 
+	
+	![](./images/update_status.png)
+	
+9. From the right hand side click `Containers` under `Inspect Resource` and you will see the containers have all exited with an error. 
+
+	Also notice under image that these containers are running the `2.0` version of our application
+
+10. Click `Services` from the left hand menu. 
+
+11. Click the `atsea_appserver` service from the list. 
+
+12. Under `Actions` on the right hand side click `Rollback`
+
+	This will tell UCP to restore the service to its previous state. In this case, running the 1.0 version of our webserver image
+	
+	After a few seconds the indicator should go from red to green, when it does move on to the next step. 
+
+13. Click the `atsea_appserver` service from the list.
+
+14. From the right hand side click `Containers` under `Inspect Resource` and you will see the container has started and is healthy.
+
+	Also notice under image that the container is running the `1.0` version of our application.
+	
+15. In your web browser naviage to `<http://<ucp hostname>:8080>` and verify that your website is still running
+	
+Now that we've dealt with a failed upgrade, let's look at rolling out a successful upgrade
+
+1. Move back to UCP in your web browser
+
+1. Move back into Universal Control Plane
+
+2. If your services are not currently displayed, click on `Services` from the left hand menu
+
+3. Click on the `atsea_appserver` service from the list
+
+4. On the left, under 'Configure` select `Details`
+
+	![](./images/service_details.png)
+	
+5. Under image, change the value to `mikegcoleman/atsea_appserver:3.0`
+
+6. Click `Update` in the bottom right corner
+
+7. Click on the `atsea_appserver` service from the list
+
+8. Notice the `Update Status` reads updating, and the indicator in the main area will go from green to red to green. 
+
+9.  From the right hand side click `Containers` under `Inspect Resource` and you will see the container has started and is healthy.
+
+	Also notice under image that the container is running the `3.0` version of our application.
+	
+10. In your web browser naviage to `<http://<ucp hostname>:8080>` to see the new version of the website (if you already have the site up and running, simply refresh your browser)
+
+
+### <a name="task5.2"></a> Task 5.2: Scaling the Web Front-end
+
+The new site design appears to dramatically increased the popularity of your website. In order to deal with increased demand, you're going to need to scale up the number of containers in the `atsea_appserver` service. 
+
+1. Move to UCP in your web browser
+
+2. From the left hand menu click `Services`
+
+3. Click the `atsea_appserver` service
+
+4. From the `Configure` drop down on the right choose `Scheduling`
+
+5. Change `Scale` from `1` to `4`
+
+6. Click `Update`
+
+7. The indicator changes to yellow to indicate the service is still running, but undergoing an update. You also notice it reads `1/4` - this tells you that you have one healthy container out of the four you require. Regardless, your website is still available at this point. 
+
+	After a minute or so you'll see the indicator turn green, and you will see the status go to `4/4`
+	
+8. Click the `atsea_appserver` from the list
+
+9. From the right hand side click `Containers` under `Inspect Resource` and you will see the four containers have started and are healthy.
+
+	Also notice under `Node` that some containers are running on `worker1` and some are running on `manager1`
+	
+10. Go to your website in your brower and refresh the page, you will notice in the upper right the IP and Host change. This output is the IP and container ID of the actual container that served up the web page. 
+
+	> **Note**: If you are not running in an incognito window you may need to force your browser to ignore the cache in order to see the values change. Consult the help section of your browser to learn how to do this. 
+	
+Everything seems to be humming along nicely until one of your nodes in the cluster fails. In the next section we'll show how Docker EE deals with these sort of failuers. 
+
+### <a name="5.3"></a> Task 5.3: Dealing with an Application Failure
+
+Docker EE will always try and reconcile your services to their desired state. For instance, in the case of our web frontend, we have specified we want four containers running. If for some reason the number ever drops below four, Docker EE will attempt to get the service back to four containers. 
+
+In this section we're going to simulate a node failure and see how Docker EE handles the situation. We're not actually going to crash a node. What we're going do do is put our worker node in `Drain` mode - which is essentially maintenance mode. We are telling Docker EE to shut all the containers that are running on that node down, and not schedule any additional work on to that node. 
+
+1. Move to UCP in your web browser
+
+2. If the filter bar is active (the blue bar at the top of the screen) - click the `x` in the upper right corner to clear the filter. 
+
+3. From the left menu click `Nodes`
+
+4. Click on `worker1`
+
+5. From the `Configure` dropdown on the right side select Details
+
+6. Under `Availability` click `Drain`
+
+7. Click `Save`
+
+	This will immediatley put the `worker1` node into Drain mode, and stop all running containers on that node. 
+	
+8. Go to the AtSea website and refresh to verify it's still running. 
+
+	Even though one node failed, the built in Docker EE load balancer will direct traffic to the containers running on our healthy `manager1` node
+	
+9. Move back to UCP
+
+10. Click the `x` in the upper right corner to close the `Edit Node` screen
+
+	Notice that `worker1` still has a green indicator, this is because technically the node is still running and healthy. However, on the right hand side you'll see the `Availability` listed as `DRAIN`
+
+10. Click on `Services` from the left hand menu
+
+10. Click on the `atsea_appserver`
+
+11. From the `Inspect Resource` drop down on the right select `Containers`
+
+	Notice that the two containers that were running on `worker1` have been stopped, and they have been restarted on `manager1`
+
+
+## Conclusion
+In	this lab we've looked how Docker EE can help you manage both Linux and Windows workloads whether they be traditioanl apps you've modernized or newer cloud-native apps. We also looked at how to deal with upgrades, scaling, and system failures. 
+
+You can find more information on Docker EE at [http://www.docker.com](http://www.docker.com/enterprise-edition) as well as continue exploring using our hosted trial at [https://dockertrial.com](https://dockertrial.com)
+
