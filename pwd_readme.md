@@ -73,7 +73,7 @@ Throughout the lab you will be asked to provide either hosntnames or login crede
 
 ## <a name="task1"></a>Task 1: Configure the Docker EE Cluster
 
-The Play with Docker (PWD) environment is almost completely setup, but before we can begin the labs we need to do two more steps. First we'll add a Windows node to the cluster, and then we'll crea
+The Play with Docker (PWD) environment is almost completely setup, but before we can begin the labs we need to do two more steps. First we'll add a Windows node to the cluster, and then we'll create two repositories on the DTR server. 
 
 ### <a name="task 1.1"></a>Task 1.1: Accessing PWD
 
