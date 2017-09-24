@@ -191,9 +191,9 @@ Let's start with the Linux version.
 
 	`$ cd ./hybrid-workshop/linux_tweet_app/`
 
-2. Use `docker build` to build your Linux tweet web app Docker image.
+2. Use `docker image build` to build your Linux tweet web app Docker image.
 
-	`$ docker build -t <dtr host name>/<your user name>/linux_tweet_app .`
+	`$ docker image build -t <dtr host name>/<your user name>/linux_tweet_app .`
 	
 	> **Note**: Be sure to substitute your DTR Host Name and your User Name - both these are listed at the top of your PWD page.
 
@@ -236,12 +236,12 @@ Let's start with the Linux version.
 	Password: <your password>
 	Login Succeeded
 	```
-4. Use `docker push` to upload your image up to Docker Trusted Registry.
+4. Use `docker image push` to upload your image up to Docker Trusted Registry.
 
 	> **Note**: You should still be logged into DTR from the previous steps, but if not you will need to log in again.
 
 	```
-	$ docker push <dtr host name>/<your user name>/linux_tweet_app
+	$ docker image push <dtr host name>/<your user name>/linux_tweet_app
 	```
 
 	The output should be similar to the following:
@@ -329,7 +329,7 @@ There is a Windows Server 2016 VHD that contains our Windows Tweet App stored in
 
 1. Click the name of your Windows host in PWD to switch your web console.
 2
-2. Use Image2Docker's `ConvertTo-Dockerfile` command to create a dockerfile from the VHD.
+2. Use the [Image2Docker](https://github.com/docker/communitytools-image2docker-win) `ConvertTo-Dockerfile` command to create a dockerfile from the VHD.
 
 	Copy and paste the command below into your Windows console window.
 
@@ -362,9 +362,9 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 	`PS C:\> cd c:\windowstweetapp\`
 
 
-2. Use `docker build` to build your Windows tweet web app Docker image.
+2. Use `docker image build` to build your Windows tweet web app Docker image.
 
-	`$ docker build -t <dtr host name>/<your user name>//windows_tweet_app .`
+	`$ docker image build -t <dtr host name>/<your user name>/windows_tweet_app .`
 
 	> **Note**: Feel free to examine the Dockerfile in this directory if you'd like to see how the image is being built.
 
@@ -385,7 +385,7 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 	 ---> d74eead7f408
 	Removing intermediate container ab4dfee81c7e
 	Successfully built d74eead7f408
-	Successfully tagged <dtr host name>/<your user name>//windows_tweet_app:latest
+	Successfully tagged <dtr host name>/<your user name>/windows_tweet_app:latest
 	```
 	> **Note**: It will take sevearl minutes for your image to build. 
 
@@ -401,7 +401,7 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 5. Push your new image up to Docker Trusted Registry.
 
 	```
-	PS C:\Users\docker> docker push <dtr hostname>/<your username>/windows_tweet_app
+	PS C:\Users\docker> docker image push <dtr hostname>/<your username>/windows_tweet_app
 	The push refers to a repository [<dtr hostname>/<your username>/windows_tweet_app]
 	5d08bc106d91: Pushed
 	74b0331584ac: Pushed
