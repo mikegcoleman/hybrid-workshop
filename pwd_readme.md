@@ -131,7 +131,7 @@ Let's start by adding our 3rd node to the cluster, a Windows Server 2016 worker 
 
 6. You should be taken to the `Nodes` screen will will see 3 nodes listed at the bottom of your screen.
 
-	After a minute or two refresh your web browswer to ensure that your Windows worker node has come up as `healthy`
+	After a minute or two refresh your web browser to ensure that your Windows worker node has come up as `healthy`
 
 	![](./images/node_listing.png)
 
@@ -139,7 +139,7 @@ Congratulations on adding a Windows node to your UCP cluster. Next up we'll crea
 
 ### <a name="task1.3"></a>Task 1.3: Create Two DTR Repositories
 
-Docker Trusted Registry is a special server designed to store and manage your Docker images. In this lab we're going to create a couple of different Docker images, and push them to DTR. But before we can do that we need to setup respositories in which those images will reside.
+Docker Trusted Registry is a special server designed to store and manage your Docker images. In this lab we're going to create a couple of different Docker images, and push them to DTR. But before we can do that we need to setup repositories in which those images will reside.
 
 1. In the PWD web interface click the `DTR` button on the left side of the scree.
 
@@ -544,7 +544,7 @@ You should now be back on the Stacks screen.
 
 ## <a name="task5"></a> Task 5: Application Lifecycle Management
 
-Now that we've deployed our application, let's take a look at some common tasks that admins need to do to keep their apps running and up-to-date. We'll start by upgrading the web front end, next we'll scale that service to meet demand, and then finally we'll see how to deal with the failur of a node in our UCP cluster.
+Now that we've deployed our application, let's take a look at some common tasks that admins need to do to keep their apps running and up-to-date. We'll start by upgrading the web front end, next we'll scale that service to meet demand, and then finally we'll see how to deal with the failure of a node in our UCP cluster.
 
 ### <a name="task5.1"></a> Task 5.1: Upgrading the Web Front-end
 
