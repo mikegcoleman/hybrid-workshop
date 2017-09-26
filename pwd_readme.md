@@ -341,8 +341,17 @@ There is a Windows Server 2016 VHD that contains our Windows Tweet App stored in
 ![](./images/windows75.png)
 
 1. Click the name of your Windows host in PWD to switch your web console.
-2
-2. Use Image2Docker's `ConvertTo-Dockerfile` command to create a dockerfile from the VHD.
+
+2. Set up the Image2Docker PowerShell module - you need to install the module, and then import it to make it available in the session. Copy ans paste this command into the Windows console:
+
+```
+Install-Module -Force Image2Docker
+
+Import-Module Image2Docker
+```
+
+
+3. Use Image2Docker's `ConvertTo-Dockerfile` command to create a dockerfile from the VHD.
 
 	Copy and paste the command below into your Windows console window.
 
@@ -383,21 +392,17 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 	```
 	PS C:\windowstweetapp> docker build -t <dtr hostname>/<your user name>/windows_tweet_app .
 
-	Sending build context to Docker daemon  6.144kB
-	Step 1/10 : FROM microsoft/windowsservercore
+	Sending build context to Docker daemon  415.7kB
+	Step 1/8 : FROM microsoft/iis:windowsservercore-10.0.14393.1715
 	 ---> 590c0c2590e4
 
 	<output snipped>
 
-	Step 10/10 : HEALTHCHECK CMD powershell -command     try {      $response = Invoke-WebRequest http://localhost -UseBasic
-	Parsing;      if ($response.StatusCode -eq 200) { return 0}      else {return 1};     } catch { return 1 }
-	 ---> Running in ab4dfee81c7e
-	 ---> d74eead7f408
 	Removing intermediate container ab4dfee81c7e
 	Successfully built d74eead7f408
 	Successfully tagged <dtr hostname>/<your user name>/windows_tweet_app:latest
 	```
-	> **Note**: It will take sevearl minutes for your image to build.
+	> **Note**: It will take a few minutes for your image to build.
 
 4. Log into Docker Trusted Registry
 
