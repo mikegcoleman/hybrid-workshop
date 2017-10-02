@@ -163,7 +163,7 @@ You'll see some additional output as the UCP manager is installed
 
 The next thing we need to do is upload your Docker EE license. For this workshop we are supplying a short-term license, you can download your own 30-day trial license from the Docker Store.
 
-1. Download the [license file](https://drive.google.com/file/d/0ByQd4O58ibOEazFVRUJYNDYxMjg/view?usp=sharing) to your local laptop
+1. Download the [license file](https://drive.google.com/file/d/0ByQd4O58ibOEMkM4bE5XVnJPbEU/view?usp=sharing) to your local laptop
 
 1. Navigate to the UCP console by pointing your browser at `https://<linux node c public ip address>`
 
