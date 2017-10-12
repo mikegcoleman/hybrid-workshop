@@ -27,13 +27,13 @@ variable "region" {
 variable "win_image_vhd_uri" {
   description = "URI of the windows VHD to use as the VM image"
   type = "string"
-  default = "https://mikergdisks645.blob.core.windows.net/osimages/ws2016-1706-ee-osDisk.21ee6c93-c674-41c8-9a44-3fb01082f67a.vhd?st=2017-08-17T22%3A49%3A00Z&se=2019-08-18T22%3A49%3A00Z&sp=rl&sv=2016-05-31&sr=b&sig=OVxi6yds2SOl4MPxdRYLkjdlzTYCbF264mpymeS2Tgc%3D"
+  default="https://mikewest.blob.core.windows.net/osimages/ws2016-10-10-2017-osDisk.7073f308-b14f-4c7c-be8b-bff06f5f2388.vhd?st=2017-10-12T01%3A18%3A00Z&se=2018-10-13T01%3A18%3A00Z&sp=rl&sv=2016-05-31&sr=b&sig=3C4n5WbDZ1PXGHP4K7Wes5G20p9gIazECRrGBvl8e8g%3D"
 }
 
 variable "lin_image_vhd_uri" {
   description = "URI of the linux VHD to use as the VM image"
   type = "string"
-  default = "https://mikergdisks645.blob.core.windows.net/osimages/ubuntu-1604-1706-ee-osDisk.9811daed-7556-47ec-a636-16457e9c645d.vhd?st=2017-08-17T22%3A49%3A00Z&se=2019-08-18T22%3A49%3A00Z&sp=rl&sv=2016-05-31&sr=b&sig=8zOiCewZ%2F7Gck9%2F4Hozaphz%2Bzq04cPZwhY%2FQMfPIA7o%3D"
+  default = "https://mikewest.blob.core.windows.net/osimages/ubuntu1604-10-10-2017-osDisk.dacfb97b-c826-4c8c-9f97-34d66fcad46a.vhd?st=2017-10-12T01%3A18%3A00Z&se=2018-10-13T01%3A18%3A00Z&sp=rl&sv=2016-05-31&sr=b&sig=sCY1lptno4KkPdIDF%2BIt2jW0q%2FTbqVyUucwrfwAhx74%3D"
 }
 
 variable "cluster_count" {
