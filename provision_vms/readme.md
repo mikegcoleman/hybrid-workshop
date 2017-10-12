@@ -118,6 +118,7 @@ Use a Windows Server 2016 base image (with all the latest updates). Additionally
 
 * Copy the `copy_certs.ps1` script (which can be found in the `utilities` directory into `C:\`
 
+* Install [Image2Docker](https://github.com/docker/communitytools-image2docker-win)
 
 * Copy this VHD as [C:\ws2016.vhd](https://drive.google.com/uc?export=download&id=0ByQd4O58ibOES0VCbjNxTTk5LUU)
 
