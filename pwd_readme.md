@@ -28,10 +28,10 @@ In this lab we'll use a Docker EE cluster comprised of Windows and Linux nodes. 
 >   * [Task 4.1: Examine the Docker Compose File](#task4.1)
 >   * [Task 4.2: Deploy the Application Stack](#task4.2)
 >   * [Task 4.3: Verify the Running Application](#task4.3)
-> * [Task 5: Application Lifecycle Management](#Task5)
->   * [Task 5.1: Upgrading the Web Front-end](#Task5.1)
->   * [Task 5.2: Scaling the Web Front-end](#Task 5.2)
->   * [Task 5.3: Dealing with an Application Failure](#Task5.3)
+> * [Task 5: Application Lifecycle Management](#task5)
+>   * [Task 5.1: Upgrading the Web Front-end](#task5.1)
+>   * [Task 5.2: Scaling the Web Front-end](#task5.2)
+>   * [Task 5.3: Dealing with an Application Failure](#task5.3)
 
 ## Understanding the Play With Docker Interface
 
@@ -660,7 +660,7 @@ The new site design appears to dramatically increased the popularity of your web
 
 Everything seems to be humming along nicely until one of your nodes in the cluster fails. In the next section we'll show how Docker EE deals with these sort of failuers.
 
-### <a name="5.3"></a> Task 5.3: Dealing with an Application Failure
+### <a name="task5.3"></a> Task 5.3: Dealing with an Application Failure
 
 Docker EE will always try and reconcile your services to their desired state. For instance, in the case of our web frontend, we have specified we want four containers running. If for some reason the number ever drops below four, Docker EE will attempt to get the service back to four containers.
 
@@ -692,11 +692,11 @@ In this section we're going to simulate a node failure and see how Docker EE han
 
 	Notice that `worker1` still has a green indicator, this is because technically the node is still running and healthy. However, on the right hand side you'll see the `Availability` listed as `DRAIN`
 
-10. Click on `Services` from the left hand menu
+11. Click on `Services` from the left hand menu
 
-10. Click on the `atsea_appserver`
+12. Click on the `atsea_appserver`
 
-11. From the `Inspect Resource` drop down on the right select `Containers`
+13. From the `Inspect Resource` drop down on the right select `Containers`
 
 	Notice that the two containers that were running on `worker1` have been stopped, and they have been restarted on `manager1`
 
