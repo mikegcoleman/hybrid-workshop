@@ -207,7 +207,7 @@ Let's start with the Linux version.
 
 	> **Note**: Be sure to substitute your DTR Hostname and your User Name - both these are listed at the top of your PWD page.
 
-	The `-t` tags the iamge with a name. In our case the name indicates which DTR server and under which user's respository the image will live.
+	The `-t` tags the image with a name. In our case the name indicates which DTR server and under which user's respository the image will live.
 
 	> **Note**: Feel free to examine the Dockerfile in this directory if you'd like to see how the image is being built.
 
@@ -597,7 +597,7 @@ In this section we're going to first simulate a failed upgrade attempt, and see 
 
 	Also notice under image that the container is running the `1.0` version of our application.
 
-15. In your web browser naviage to `<http://<ucp hostname>:8080>` and verify that your website is still running
+15. In your web browser navigate to `<http://<ucp hostname>:8080>` and verify that your website is still running
 
 Now that we've dealt with a failed upgrade, let's look at rolling out a successful upgrade
 
@@ -625,7 +625,7 @@ Now that we've dealt with a failed upgrade, let's look at rolling out a successf
 
 	Also notice under image that the container is running the `3.0` version of our application.
 
-10. In your web browser naviage to `<http://<ucp hostname>:8080>` to see the new version of the website (if you already have the site up and running, simply refresh your browser)
+10. In your web browser navigate to `<http://<ucp hostname>:8080>` to see the new version of the website (if you already have the site up and running, simply refresh your browser)
 
 
 ### <a name="task5.2"></a> Task 5.2: Scaling the Web Front-end
