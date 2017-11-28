@@ -46,12 +46,12 @@ Play with Docker provides access to the 3 Docker EE hosts in your Cluster. These
 * A Linux-based Docker EE 17.06 Worker node
 * A Windows Server 2016-based Docker EE 17.06 Worker Node
 
-By clicking a name on the left, the console window will be connected to that node
+By clicking a name on the left, the console window will be connected to that node.
 
 ### 2. Access to your Universal Control Plane (UCP) and Docker Trusted Registry (DTR) servers
 
-Additionally, the PWD screen provides you one-click access to the Universal Control Plane (UCP)
-web-based management interface as well as the Docker Trusted Registry (DTR) web-based management interface. Click on either the `UCP` or `DTR` button will bring up the respective server web interface in a new tab.
+Additionally, the PWD screen provides you with a one-click access to the Universal Control Plane (UCP)
+web-based management interface as well as the Docker Trusted Registry (DTR) web-based management interface. Clicking on either the `UCP` or `DTR` button will bring up the respective server web interface in a new tab.
 
 ### 3. Session Information
 
@@ -67,13 +67,14 @@ Throughout the lab you will be asked to provide either hostnames or login creden
 
 	![](./images/linux75.png)
 
-- When you see the Windows flag all the subsequent instructions should be completed in your Windows console.
 
+- When you see the Windows flag all the subsequent instructions should be completed in your Windows console
 	![](./images/windows75.png)
 
 ## <a name="task1"></a>Task 1: Configure the Docker EE Cluster
 
-The Play with Docker (PWD) environment is almost completely setup, but before we can begin the labs we need to do two more steps. First we'll add a Windows node to the cluster, and then we'll create two repositories on the DTR server.
+The Play with Docker (PWD) environment is almost completely set up, but before we can begin the labs, we need to do two more steps. First we'll add a Windows node to the cluster, and then we'll create two repositories on the DTR server.
+(The Linux worker node is already added to the cluster)
 
 ### <a name="task 1.1"></a>Task 1.1: Accessing PWD
 
@@ -109,7 +110,7 @@ Let's start by adding our 3rd node to the cluster, a Windows Server 2016 worker 
 
 	![](./images/add_a_node.png)
 
-4. Copy the text from the dark box shown on the `Add Node` screen.
+4. Select node type "Windows", check the box, that you followed the instructions and copy the text from the dark box shown on the `Add Node` screen.
 
 	> **Note** There is an icon in the upper right corner of the box that you can click to copy the text to your clipboard
 	> ![](./images/join_text.png)
@@ -123,7 +124,7 @@ Let's start by adding our 3rd node to the cluster, a Windows Server 2016 worker 
 
 6. Switch back to the PWD interface, and click the name of your Windows node. This will connect the web-based console to your Windows Server 2016 Docker EE host.
 
-7. Paste the text from Step 4 at the command prompt in the Windows console.
+7. Paste the text from Step 4 at the command prompt in the Windows console. (depending on your browser, this can be tricky: try the "paste" command from the edit menu instead of right clicking or using keyboard shortcuts)
 
 	You should see the message `This node joined a swarm as a worker.` indicating you've successfully joined the node to the cluster.
 
@@ -131,7 +132,7 @@ Let's start by adding our 3rd node to the cluster, a Windows Server 2016 worker 
 
 6. You should be taken to the `Nodes` screen and will see 3 nodes listed at the bottom of your screen.
 
-	After a minute or two refresh your web browser to ensure that your Windows worker node has come up as `healthy`
+	Initially the new worker node will be shown with status `down`. After a minute or two, refresh your web browser to ensure that your Windows worker node has come up as `healthy`
 
 	![](./images/node_listing.png)
 
@@ -139,11 +140,11 @@ Congratulations on adding a Windows node to your UCP cluster. Next up we'll crea
 
 ### <a name="task1.3"></a>Task 1.3: Create Two DTR Repositories
 
-Docker Trusted Registry is a special server designed to store and manage your Docker images. In this lab we're going to create a couple of different Docker images, and push them to DTR. But before we can do that we need to setup repositories in which those images will reside.
+Docker Trusted Registry is a special server designed to store and manage your Docker images. In this lab we're going to create a couple of different Docker images, and push them to DTR. But before we can do that, we need to setup repositories in which those images will reside.
 
 1. In the PWD web interface click the `DTR` button on the left side of the screen.
 
-	> **Note**: As with UCP before, DTR is also using self-signed certs. It's safe to click through any browser warning you might encoutner.
+	> **Note**: As with UCP before, DTR is also using self-signed certs. It's safe to click through any browser warning you might encounter.
 
 2. From the main DTR page click `New Repository`. This brings up the new repository dialog
 
@@ -160,7 +161,7 @@ Docker Trusted Registry is a special server designed to store and manage your Do
 
 	![](./images/two_repos.png)
 
-Congratulations you have created two new repositories.
+Congratulations, you have created two new repositories.
 
 ## <a name="task2"></a>Task 2: Deploy a Linux Web App
 
@@ -207,9 +208,9 @@ Let's start with the Linux version.
 
 	> **Note**: Be sure to substitute your DTR Hostname and your User Name - both these are listed at the top of your PWD page.
 
-	The `-t` tags the image with a name. In our case the name indicates which DTR server and under which user's respository the image will live.
+	The `-t` tags the image with a name. In our case, the name indicates which DTR server and under which user's respository the image will live.
 
-	> **Note**: Feel free to examine the Dockerfile in this directory if you'd like to see how the image is being built.
+> **Note**: Feel free to examine the Dockerfile in this directory if you'd like to see how the image is being built.
 
 	Your output should be similar to what is shown below
 
@@ -306,6 +307,8 @@ After a few seconds you should see a green dot next to your service name. Once y
 
 > **Note**: You want to go to `http://` not `https://`
 
+You may also click on the service to open the right sidebar to inspect the service and click on the link under `published endpoints` in the configuration section.
+
 ### Extra Credit: Ingress Load Balancing
 
 1. In UCP click on `Services` in the left hand menu.
@@ -342,11 +345,13 @@ There is a Windows Server 2016 VHD that contains our Windows Tweet App stored in
 
 1. Click the name of your Windows host in PWD to switch your web console.
 
-2. Set up the Image2Docker PowerShell module - you need to install the module, and then import it to make it available in the session. Copy and paste this command into the Windows console:
+2. Set up the Image2Docker PowerShell module - you need to install the module, and then import it to make it available in the session. Copy and paste these commands into the Windows console:
 
 ```
 Install-Module -Force Image2Docker
+```
 
+```
 Import-Module Image2Docker
 ```
 
@@ -431,8 +436,10 @@ When the process completes you'll find a Dockerfile in `c:\windowstweetapp`
 	f358be10862c: Skipped foreign layer
 	latest: digest: sha256:e28b556b138e3d407d75122611710d5f53f3df2d2ad4a134dcf7782eb381fa3f size: 2825
 	```
+6. You may check your repositories in the DTR web interface to see the newly pushed image.
 
 ### <a name="task3.3"></a> Task 3.3: Deploy the Windows Web App
+
 Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It's going to be almost identical to how did the Linux version with a couple of one small exceptionn: Docker EE on Windows Server 2016 does not currently support ingress load balancing, so we'll expose the ports in `host` mode using `dnsrr`
 
 1. Switch back to UCP in your web browser
@@ -538,12 +545,12 @@ You should now be back on the Stacks screen.
 
 	![](./images/inspect_resoource.png)
 
-	Here you can see your two services running. It may take a few minutes for the database service to come up (the dot to turn green). Once it does move on to the next section.
+	Here you can see your two services running. It may take a few minutes for the database service to come up (the dot to turn green). Once it does, move on to the next section.
 
 
 ### <a name="task4.3"></a> Task 4.3: Verify the Running Application
 
-1. To see our running web site (an art store) visit `http://<UCP hostname>:8080>`
+1. To see our running web site (an art store) visit `http://<UCP hostname>:8080>` or click on the published endpoint link under "Configuration" in the sidebar
 
 	The thumbnails you see displayed are actually pulled from the SQL database. This is how you know that the connection is working between the database and web front end.
 
@@ -561,7 +568,7 @@ In this section we're going to first simulate a failed upgrade attempt, and see 
 
 3. Click on the `atsea_appserver` service from the list
 
-4. On the left, under 'Configure` select `Details`
+4. On the left, under `Configure` select `Details`
 
 	![](./images/service_details.png)
 
@@ -609,7 +616,7 @@ Now that we've dealt with a failed upgrade, let's look at rolling out a successf
 
 3. Click on the `atsea_appserver` service from the list
 
-4. On the left, under 'Configure` select `Details`
+4. On the left, under `Configure` select `Details`
 
 	![](./images/service_details.png)
 
@@ -674,7 +681,7 @@ In this section we're going to simulate a node failure and see how Docker EE han
 
 4. Click on `worker1`
 
-5. From the `Configure` dropdown on the right side select Details
+5. From the `Configure` dropdown on the right side select `Details`
 
 6. Under `Availability` click `Drain`
 
@@ -702,6 +709,7 @@ In this section we're going to simulate a node failure and see how Docker EE han
 
 
 ## Conclusion
-In this lab we've looked how Docker EE can help you manage both Linux and Windows workloads whether they be traditioanl apps you've modernized or newer cloud-native apps. We also looked at how to deal with upgrades, scaling, and system failures.
+
+In this lab we've looked how Docker EE can help you manage both Linux and Windows workloads whether they be traditional apps you've modernized or newer cloud-native apps. We also looked at how to deal with upgrades, scaling, and system failures.
 
 You can find more information on Docker EE at [http://www.docker.com](http://www.docker.com/enterprise-edition) as well as continue exploring using our hosted trial at [https://dockertrial.com](https://dockertrial.com)
