@@ -55,7 +55,7 @@ web-based management interface as well as the Docker Trusted Registry (DTR) web-
 
 ### 3. Session Information
 
-Throughout the lab you will be asked to provide either hosntnames or login credentials that are unique to your environment. These are displayed for you at the bottom of the screen.
+Throughout the lab you will be asked to provide either hostnames or login credentials that are unique to your environment. These are displayed for you at the bottom of the screen.
 
 ## Document conventions
 
@@ -67,7 +67,7 @@ Throughout the lab you will be asked to provide either hosntnames or login crede
 
 	![](./images/linux75.png)
 
-- When you see the Windows flag all the subsequent instructions should be completed in your Windows cosnsole.
+- When you see the Windows flag all the subsequent instructions should be completed in your Windows console.
 
 	![](./images/windows75.png)
 
@@ -77,7 +77,7 @@ The Play with Docker (PWD) environment is almost completely setup, but before we
 
 ### <a name="task 1.1"></a>Task 1.1: Accessing PWD
 
-1. Navigate in your web browswer to [the PWD environment sign-in page](https://goto.docker.com/2017PWDonMicrosoftAzure_MTALP.html)
+1. Navigate in your web browser to [the PWD environment sign-in page](https://goto.docker.com/2017PWDonMicrosoftAzure_MTALP.html)
 
 	> **Note**: You might want to right click the above link and open it in a new tab or window
 
@@ -129,7 +129,7 @@ Let's start by adding our 3rd node to the cluster, a Windows Server 2016 worker 
 
 5. Switch back to the UCP server in your web browser and click the `x` in the upper right corner to close the `Add Node` window
 
-6. You should be taken to the `Nodes` screen will will see 3 nodes listed at the bottom of your screen.
+6. You should be taken to the `Nodes` screen and will see 3 nodes listed at the bottom of your screen.
 
 	After a minute or two refresh your web browser to ensure that your Windows worker node has come up as `healthy`
 
@@ -141,7 +141,7 @@ Congratulations on adding a Windows node to your UCP cluster. Next up we'll crea
 
 Docker Trusted Registry is a special server designed to store and manage your Docker images. In this lab we're going to create a couple of different Docker images, and push them to DTR. But before we can do that we need to setup repositories in which those images will reside.
 
-1. In the PWD web interface click the `DTR` button on the left side of the scree.
+1. In the PWD web interface click the `DTR` button on the left side of the screen.
 
 	> **Note**: As with UCP before, DTR is also using self-signed certs. It's safe to click through any browser warning you might encoutner.
 
@@ -172,7 +172,7 @@ Let's start with the Linux version.
 
 ![](./images/linux75.png)
 
-1. From PWD click on on the `worker1` link on the left to connnect your web console to the UCP Linux worker node.
+1. From PWD click on the `worker1` link on the left to connnect your web console to the UCP Linux worker node.
 
 2. Use git to clone the workshop repository.
 
@@ -272,7 +272,7 @@ Let's start with the Linux version.
 
 ### <a name="task2.3"></a> Task 2.3: Deploy the Web App using UCP
 
-Now let's run our application by by creating a new service.
+Now let's run our application by creating a new service.
 
 Services are application building blocks (although in many cases an application will only have one service, such as this example). Services are based on a single Docker image. When you create a new service you instantiate at least one container automatically, but you can scale the number up (or down) to meet the needs of your service.
 
@@ -302,7 +302,7 @@ Services are application building blocks (although in many cases an application 
 
 12. Click `Create` near the bottom right of the screen.
 
-After a few seconds you should see a green dot next to your service name. Once you see you green dot you can point your web browser to `http://<UCP hostname>:8088` to see your running website  (it may take a minute or so after the dot turns green for the service to be fully available).
+After a few seconds you should see a green dot next to your service name. Once you see the green dot you can point your web browser to `http://<UCP hostname>:8088` to see your running website  (it may take a minute or so after the dot turns green for the service to be fully available).
 
 > **Note**: You want to go to `http://` not `https://`
 
@@ -342,7 +342,7 @@ There is a Windows Server 2016 VHD that contains our Windows Tweet App stored in
 
 1. Click the name of your Windows host in PWD to switch your web console.
 
-2. Set up the Image2Docker PowerShell module - you need to install the module, and then import it to make it available in the session. Copy ans paste this command into the Windows console:
+2. Set up the Image2Docker PowerShell module - you need to install the module, and then import it to make it available in the session. Copy and paste this command into the Windows console:
 
 ```
 Install-Module -Force Image2Docker
@@ -359,7 +359,7 @@ Import-Module Image2Docker
 	ConvertTo-Dockerfile -ImagePath c:\ws2016.vhd -Artifact IIS -OutputPath C:\windowstweetapp -Verbose
 	```
 
-	As mentioned before Image2Docker will scan the VHD, and extract out a Dockerfile based on the contents of the VHD. The list below explains the command line aruguments.
+	As mentioned before Image2Docker will scan the VHD, and extract out a Dockerfile based on the contents of the VHD. The list below explains the command line arguments.
 
 	* `ImagePath` specifies where the VHD can be found
 
@@ -369,7 +369,7 @@ Import-Module Image2Docker
 
 	* `Verbose` instructs the script to provide extra output.
 
-When the process completes you'll find a dockerfile in `c:\windowstweetapp`
+When the process completes you'll find a Dockerfile in `c:\windowstweetapp`
 
 
 ### <a name="task3.2"></a> Task 3.2: Build and Push Your Image to Docker Trusted Registry
@@ -433,7 +433,7 @@ When the process completes you'll find a dockerfile in `c:\windowstweetapp`
 	```
 
 ### <a name="task3.3"></a> Task 3.3: Deploy the Windows Web App
-Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It's going to be almost identical to how did the Linux version with a couple of one small exceptionn: Docker EE on Windows Server 2016 does not currently support ingress load balancing, so we'll exposer the ports in `host` mode using `dnsrr`
+Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It's going to be almost identical to how did the Linux version with a couple of one small exceptionn: Docker EE on Windows Server 2016 does not currently support ingress load balancing, so we'll expose the ports in `host` mode using `dnsrr`
 
 1. Switch back to UCP in your web browser
 
@@ -461,7 +461,7 @@ Now that we have our Windows Tweet App up on the DTR server, let's deploy it. It
 
 12. Click `Create` near the bottom right of the screen.
 
-After a few seconds you should see a green dot next to your service name. Once you see you green dot you can  point your web browser to `http://<windows host>:8082` to see your running website.
+After a few seconds you should see a green dot next to your service name. Once you see the green dot you can point your web browser to `http://<windows host>:8082` to see your running website.
 
 ## <a name="task4"></a> Task4: Deploying a Multi-OS Application
 
@@ -469,7 +469,7 @@ For our last exercise we'll use a docker compose file to deploy an application t
 
 ### <a name="task4.1"></a> Task 4.1: Examine the Docker Compose file
 
-We'll use a Docker Compose file to instantiate our application. With this file we can define all our services and their parameters, as well as other Docker primatives such as networks.
+We'll use a Docker Compose file to instantiate our application. With this file we can define all our services and their parameters, as well as other Docker primitives such as networks.
 
 Let's look at the Docker Compose file:
 
@@ -506,7 +506,7 @@ One thing that is new is the creation of an overlay network (`atsea`). Overlay n
 
 ### <a name="task4.2"></a> Taks 4.2 Deploy the Application Stack
 
-A `stack` is a group of related services that make up an application. Stacks are a newer Docker primative, and can be deployed with a Docker Compose file.
+A `stack` is a group of related services that make up an application. Stacks are a newer Docker primitive, and can be deployed with a Docker Compose file.
 
 Let's Deploy an application stack using the Docker Compose file above.
 
@@ -597,7 +597,7 @@ In this section we're going to first simulate a failed upgrade attempt, and see 
 
 	Also notice under image that the container is running the `1.0` version of our application.
 
-15. In your web browser naviage to `<http://<ucp hostname>:8080>` and verify that your website is still running
+15. In your web browser navigate to `<http://<ucp hostname>:8080>` and verify that your website is still running
 
 Now that we've dealt with a failed upgrade, let's look at rolling out a successful upgrade
 
@@ -625,12 +625,12 @@ Now that we've dealt with a failed upgrade, let's look at rolling out a successf
 
 	Also notice under image that the container is running the `3.0` version of our application.
 
-10. In your web browser naviage to `<http://<ucp hostname>:8080>` to see the new version of the website (if you already have the site up and running, simply refresh your browser)
+10. In your web browser navigate to `<http://<ucp hostname>:8080>` to see the new version of the website (if you already have the site up and running, simply refresh your browser)
 
 
 ### <a name="task5.2"></a> Task 5.2: Scaling the Web Front-end
 
-The new site design appears to dramatically increased the popularity of your website. In order to deal with increased demand, you're going to need to scale up the number of containers in the `atsea_appserver` service.
+The new site design appears to have dramatically increased the popularity of your website. In order to deal with increased demand, you're going to need to scale up the number of containers in the `atsea_appserver` service.
 
 1. Move to UCP in your web browser
 
@@ -664,7 +664,7 @@ Everything seems to be humming along nicely until one of your nodes in the clust
 
 Docker EE will always try and reconcile your services to their desired state. For instance, in the case of our web frontend, we have specified we want four containers running. If for some reason the number ever drops below four, Docker EE will attempt to get the service back to four containers.
 
-In this section we're going to simulate a node failure and see how Docker EE handles the situation. We're not actually going to crash a node. What we're going do do is put our worker node in `Drain` mode - which is essentially maintenance mode. We are telling Docker EE to shut all the containers that are running on that node down, and not schedule any additional work on to that node.
+In this section we're going to simulate a node failure and see how Docker EE handles the situation. We're not actually going to crash a node. What we're going to do is put our worker node in `Drain` mode - which is essentially maintenance mode. We are telling Docker EE to shut all the containers that are running on that node down, and not schedule any additional work on to that node.
 
 1. Move to UCP in your web browser
 
@@ -680,7 +680,7 @@ In this section we're going to simulate a node failure and see how Docker EE han
 
 7. Click `Save`
 
-	This will immediatley put the `worker1` node into Drain mode, and stop all running containers on that node.
+	This will immediately put the `worker1` node into Drain mode, and stop all running containers on that node.
 
 8. Go to the AtSea website and refresh to verify it's still running.
 
@@ -702,6 +702,6 @@ In this section we're going to simulate a node failure and see how Docker EE han
 
 
 ## Conclusion
-In	this lab we've looked how Docker EE can help you manage both Linux and Windows workloads whether they be traditioanl apps you've modernized or newer cloud-native apps. We also looked at how to deal with upgrades, scaling, and system failures.
+In this lab we've looked how Docker EE can help you manage both Linux and Windows workloads whether they be traditioanl apps you've modernized or newer cloud-native apps. We also looked at how to deal with upgrades, scaling, and system failures.
 
 You can find more information on Docker EE at [http://www.docker.com](http://www.docker.com/enterprise-edition) as well as continue exploring using our hosted trial at [https://dockertrial.com](https://dockertrial.com)
