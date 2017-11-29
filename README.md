@@ -15,7 +15,7 @@ This lab can be run two different ways:
 
 * [**Using Play With Docker**](https://github.com/mikegcoleman/hybrid-workshop/blob/master/pwd_readme.md): If you're attending a workshop, you'll be given directions on how to access Play with Docker's hybrid Linux/Windows environment. This environment isn't currently available between workshops. 
 
-Play with Docker is a web-based docker environment where you access your Docker hosts via a web browser. There is no need for SSH or RDP, and the Docker EE cluster is almost completely built (you will add a Windows node to see how that works). 
+	Play with Docker is a web-based docker environment where you access your Docker hosts via a web browser. There is no need for SSH or RDP, and the Docker EE cluster is almost completely built (you will add a Windows node to see how that works). 
 
 	**The instructions for the Play With Docker version of the lab can be found [here](https://github.com/mikegcoleman/hybrid-workshop/blob/master/pwd_readme.md)**
 	
